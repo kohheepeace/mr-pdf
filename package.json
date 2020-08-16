@@ -1,0 +1,60 @@
+{
+  "name": "mr-pdf",
+  "version": "0.0.1",
+  "description": "Generate pdf from document",
+  "main": "lib/index.js",
+  "scripts": {
+    "dev": "tsc --watch",
+    "build": "tsc",
+    "prepare": "yarn run build",
+    "lint": "eslint \"*/**/*.{js,ts}\"",
+    "lintfix": "eslint \"*/**/*.{js,ts}\" --fix"
+  },
+  "engines": {
+    "node": "^10.17.0 || >=11.14.0"
+  },
+  "bin": {
+    "mr-pdf": "bin/index.js"
+  },
+  "keywords": [
+    "pdf",
+    "docusaurus",
+    "vuepress",
+    "mkdocs",
+    "gitbook"
+  ],
+  "author": "Kohhee Peace <kohheepeace@gmail.com> (http://github.com/kohheePeace)",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^3.0.0",
+    "commander": "^4.1.1",
+    "pdf-lib": "^1.7.0",
+    "puppeteer": "^2.1.1"
+  },
+  "devDependencies": {
+    "@types/puppeteer": "^2.0.1",
+    "@typescript-eslint/eslint-plugin": "^3.9.0",
+    "@typescript-eslint/parser": "^3.9.0",
+    "eslint": "^7.7.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.11",
+    "prettier": "2.0.5",
+    "typescript": "^3.8.3"
+  },
+  "files": [
+    "lib/**/*",
+    "bin/**/*"
+  ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,ts}": [
+      "./node_modules/.bin/eslint --fix"
+    ]
+  }
+}

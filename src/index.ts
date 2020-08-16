@@ -76,7 +76,9 @@ export async function generatePdf({
       });
 
     // Add css style
-    await page.addStyleTag({ content: cssStyle });
+    if (cssStyle) {
+      await page.addStyleTag({ content: cssStyle });
+    }
 
     const pdfBuffer = await page.pdf({
       path: '',

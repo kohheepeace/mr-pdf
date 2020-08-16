@@ -1,2 +1,2 @@
 #!/usr/bin/env node
-require('../lib/command');
+require('../lib/src/command');

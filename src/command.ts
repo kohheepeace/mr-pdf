@@ -1,6 +1,8 @@
-const chalk = require('chalk');
-const program = require('commander');
+import chalk = require('chalk');
+import program = require('commander');
 import puppeteer = require('puppeteer');
+import { version } from '../package.json';
+
 import { generatePdf, generatePdfOptions } from './index';
 
 function commaSeparatedList(value: string, dummyPrevious: any): Array<string> {
@@ -30,7 +32,7 @@ function generatePuppeteerPdfMargin(
 
 program
   .name('mr-pdf')
-  .version(require('../package.json').version)
+  .version(version)
   .requiredOption('--initialUrl <url>', 'set url to start generating PDF from')
   .requiredOption('--paginationSelector <selector>', 'used to find next url')
   .option(

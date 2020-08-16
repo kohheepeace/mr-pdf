@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "tsc --watch",
     "build": "tsc",
-    "prepare": "yarn run build",
+    "prepare": "rimraf lib/ && yarn run build",
     "lint": "eslint \"*/**/*.{js,ts}\"",
     "lintfix": "eslint \"*/**/*.{js,ts}\" --fix"
   },
@@ -41,6 +41,7 @@
     "husky": "^4.2.5",
     "lint-staged": "^10.2.11",
     "prettier": "2.0.5",
+    "rimraf": "^3.0.2",
     "typescript": "^3.8.3"
   },
   "files": [

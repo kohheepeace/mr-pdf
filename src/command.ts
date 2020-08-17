@@ -3,13 +3,13 @@ import program = require('commander');
 import puppeteer = require('puppeteer');
 import { version } from '../package.json';
 
-import { generatePdf, generatePdfOptions } from './index';
+import { generatePDF, generatePDFOptions } from './index';
 
 function commaSeparatedList(value: string, dummyPrevious: any): Array<string> {
   return value.split(',');
 }
 
-function generatePuppeteerPdfMargin(
+function generatePuppeteerPDFMargin(
   value: string,
   dummyPrevious: any,
 ): puppeteer.PDFOptions['margin'] {
@@ -33,7 +33,10 @@ function generatePuppeteerPdfMargin(
 program
   .name('mr-pdf')
   .version(version)
-  .requiredOption('--initialUrl <url>', 'set url to start generating PDF from')
+  .requiredOption(
+    '--initialDocsURL <url>',
+    'set url to start generating PDF from',
+  )
   .requiredOption('--paginationSelector <selector>', 'used to find next url')
   .option(
     '--excludeSelectors <selectors>',
@@ -44,15 +47,15 @@ program
     '--cssStyle <cssString>',
     'css style to adjust PDF output ex: body{padding-top: 0;}',
   )
-  .option('--outputPdfFilename <filename>', 'name of output PDF file')
+  .option('--outputPDFFilename <filename>', 'name of output PDF file')
   .option(
     '--pdfMargin <margin>',
     'set margin around PDF file',
-    generatePuppeteerPdfMargin,
+    generatePuppeteerPDFMargin,
   )
   .option('--pdfFormat <format>', 'pdf format ex: A3, A4...')
-  .action((options: generatePdfOptions) => {
-    generatePdf(options)
+  .action((options: generatePDFOptions) => {
+    generatePDF(options)
       .then(() => {
         console.log(chalk.green('Finish generating PDF!'));
         process.exit(0);

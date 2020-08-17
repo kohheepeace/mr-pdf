@@ -4,9 +4,9 @@ import { PDFDocument } from 'pdf-lib';
 
 import * as fs from 'fs';
 
-const generatedPdfBuffers: Array<Buffer> = [];
+const generatedPDFBuffers: Array<Buffer> = [];
 
-async function mergePdfBuffers(pdfBuffers: Array<Buffer>) {
+async function mergePDFBuffers(pdfBuffers: Array<Buffer>) {
   const outputDoc = await PDFDocument.create();
   for (const pdfBuffer of pdfBuffers) {
     const docToAdd = await PDFDocument.load(pdfBuffer);
@@ -22,9 +22,9 @@ async function mergePdfBuffers(pdfBuffers: Array<Buffer>) {
   return outputDoc.save();
 }
 
-export interface generatePdfOptions {
-  initialUrl: string;
-  outputPdfFilename: string;
+export interface generatePDFOptions {
+  initialDocsURL: string;
+  outputPDFFilename: string;
   pdfMargin: puppeteer.PDFOptions['margin'];
   paginationSelector: string;
   pdfFormat: puppeteer.PDFFormat;
@@ -33,35 +33,35 @@ export interface generatePdfOptions {
   puppeteerArgs: Array<string>;
 }
 
-export async function generatePdf({
-  initialUrl,
-  outputPdfFilename = 'docusaurus.pdf',
+export async function generatePDF({
+  initialDocsURL,
+  outputPDFFilename = 'docusaurus.pdf',
   pdfMargin,
   paginationSelector,
   pdfFormat,
   excludeSelectors,
   cssStyle,
   puppeteerArgs,
-}: generatePdfOptions): Promise<void> {
+}: generatePDFOptions): Promise<void> {
   const browser = await puppeteer.launch({ args: puppeteerArgs });
   const page = await browser.newPage();
 
-  let nextPageUrl = initialUrl;
+  let nextPageURL = initialDocsURL;
 
-  while (nextPageUrl) {
+  while (nextPageURL) {
     console.log();
-    console.log(chalk.cyan(`Generating PDF of ${nextPageUrl}`));
+    console.log(chalk.cyan(`Generating PDF of ${nextPageURL}`));
     console.log();
 
-    await page.goto(`${nextPageUrl}`, { waitUntil: 'networkidle2' });
+    await page.goto(`${nextPageURL}`, { waitUntil: 'networkidle2' });
 
     // Find next page url before DOM operations
     try {
-      nextPageUrl = await page.$eval(paginationSelector, (element) => {
+      nextPageURL = await page.$eval(paginationSelector, (element) => {
         return (element as HTMLLinkElement).href;
       });
     } catch (e) {
-      nextPageUrl = '';
+      nextPageURL = '';
     }
 
     // Remove unnecessary part to be printed by using excludeSelectors from page
@@ -87,12 +87,12 @@ export async function generatePdf({
       margin: pdfMargin,
     });
 
-    generatedPdfBuffers.push(pdfBuffer);
+    generatedPDFBuffers.push(pdfBuffer);
 
     console.log(chalk.green('Success'));
   }
   await browser.close();
 
-  const mergedPdfBuffer = await mergePdfBuffers(generatedPdfBuffers);
-  fs.writeFileSync(`${outputPdfFilename}`, mergedPdfBuffer);
+  const mergedPDFBuffer = await mergePDFBuffers(generatedPDFBuffers);
+  fs.writeFileSync(`${outputPDFFilename}`, mergedPDFBuffer);
 }

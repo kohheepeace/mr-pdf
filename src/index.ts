@@ -35,7 +35,7 @@ export interface generatePDFOptions {
 
 export async function generatePDF({
   initialDocsURL,
-  outputPDFFilename = 'docusaurus.pdf',
+  outputPDFFilename = 'mr-pdf.pdf',
   pdfMargin,
   paginationSelector,
   pdfFormat,

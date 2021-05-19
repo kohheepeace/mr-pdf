@@ -15,7 +15,7 @@ npx mr-pdf --initialDocsURL="https://example.com" --paginationSelector="li > a"
 
 - `--excludeSelectors`: exclude selectors from PDF. Separate each selector **with comma and no space**. But you can use space in each selector. ex: `--excludeSelectors=".nav,.next > a"`
 
-- `--cssStyle`: css style to adjust PDF output ex: `--cssStyle=body{padding-top: 0;}` *If you're project owner you can use `@media print { }` to edit CSS for PDF.
+- `--cssStyle`: css style to adjust PDF output ex: `--cssStyle="body{padding-top: 0;}"` *If you're project owner you can use `@media print { }` to edit CSS for PDF.
 
 - `--outputPDFFilename`:   name of the output PDF file. Default is `mr-pdf.pdf`.
 

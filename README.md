@@ -39,10 +39,10 @@ https://docusaurus.io/en/
 npx mr-pdf --initialDocsURL="https://docusaurus.io/docs/en/installation" --paginationSelector=".docs-prevnext > a.docs-next" --excludeSelectors=".fixedHeaderContainer,footer.nav-footer,#docsNav,nav.onPageNav,a.edit-page-link,div.docs-prevnext" --cssStyle=".navPusher {padding-top: 0;}" --pdfMargin="20"
 ```
 
-### Docusaurus v2
-https://v2.docusaurus.io/
+### Docusaurus v2 beta
+https://docusaurus.io/
 
-`initialDocsURL`: https://v2.docusaurus.io/docs/
+`initialDocsURL`: https://docusaurus.io/docs
 
 `demoPDF`:
 https://drive.google.com/file/d/1Oh0VVHfoQTJ9gYVHQTuLUaXEGrhWZdXR/view?usp=sharing

@@ -45,7 +45,7 @@ https://v2.docusaurus.io/
 `initialDocsURL`: https://v2.docusaurus.io/docs/
 
 `demoPDF`:
-https://drive.google.com/file/d/1UBy-a4I7cOY26gHK1NfD6-FMSPTHpTX5/view?usp=sharing
+https://drive.google.com/file/d/1Oh0VVHfoQTJ9gYVHQTuLUaXEGrhWZdXR/view?usp=sharing
 
 
 `command`:

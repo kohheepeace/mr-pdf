@@ -50,7 +50,7 @@ https://drive.google.com/file/d/1UBy-a4I7cOY26gHK1NfD6-FMSPTHpTX5/view?usp=shari
 
 `command`:
 ```shell
-npx mr-pdf --initialDocsURL="https://v2.docusaurus.io/docs/" --paginationSelector=".pagination-nav__item--next > a" --excludeSelectors=".announcementBar_UUUQ,nav.navbar,.docSidebarContainer_3pwe,.docMainContainer_2pgU .col.col--3,footer.footer,.docItemContainer_2szM > .margin-vert--xl > .row > .col:first-child,.pagination-nav"
+npx mr-pdf --initialDocsURL="https://docusaurus.io/docs/" --paginationSelector=".pagination-nav__item--next > a" --excludeSelectors=".margin-vert--xl a"
 ```
 
 ### Vuepress

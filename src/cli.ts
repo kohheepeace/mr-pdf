@@ -1,38 +1,16 @@
+#!/usr/bin/env node
+
 import chalk = require('chalk');
 import program = require('commander');
-import puppeteer = require('puppeteer');
-import { version } from '../package.json';
 
-import { generatePDF, generatePDFOptions } from './index';
-
-function commaSeparatedList(value: string, dummyPrevious: any): Array<string> {
-  return value.split(',');
-}
-
-function generatePuppeteerPDFMargin(
-  value: string,
-  dummyPrevious: any,
-): puppeteer.PDFOptions['margin'] {
-  const marginStrings = value.split(',');
-
-  const marginTop = marginStrings[0];
-  const marginRight = marginStrings[1];
-  const marginBottom = marginStrings[2];
-  const marginLeft = marginStrings[3];
-
-  const generatedMargins = {
-    top: marginTop,
-    right: marginRight,
-    bottom: marginBottom,
-    left: marginLeft,
-  };
-
-  return generatedMargins;
-}
+import { generatePDF, generatePDFOptions } from './utils';
+import {
+  commaSeparatedList,
+  generatePuppeteerPDFMargin,
+} from './commander-options';
 
 program
   .name('mr-pdf')
-  .version(version)
   .requiredOption(
     '--initialDocsURL <url>',
     'set url to start generating PDF from',

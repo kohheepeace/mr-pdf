@@ -12,8 +12,12 @@ import {
 program
   .name('mr-pdf')
   .requiredOption(
-    '--initialDocsURL <url>',
+    '--initialDocsUrl <url>',
     'set url to start generating PDF from',
+  )
+  .requiredOption(
+    '--contentSelector <selector>',
+    'used to find the part of main content',
   )
   .requiredOption('--paginationSelector <selector>', 'used to find next url')
   .option(

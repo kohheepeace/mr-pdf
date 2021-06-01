@@ -4,12 +4,12 @@ This is a PDF generator from document website such as `docusaurus`, `vuepress`, 
 
 ## ⚡ Usage
 ```shell
-npx mr-pdf --initialDocsURL="https://example.com" --paginationSelector="li > a"
+npx mr-pdf --initialDocsUrl="https://example.com" --paginationSelector="li > a"
 ```
 
 ## 🍗 CLI Options
 
-- `--initialDocsURL`:               set url to start generating PDF from.
+- `--initialDocsUrl`:               set url to start generating PDF from.
 
 - `--paginationSelector`:  used to find next page to be printed for looping.
 
@@ -29,20 +29,20 @@ npx mr-pdf --initialDocsURL="https://example.com" --paginationSelector="li > a"
 ### Docusaurus v1
 https://docusaurus.io/en/
 
-`initialDocsURL`: https://docusaurus.io/docs/en/installation
+`initialDocsUrl`: https://docusaurus.io/docs/en/installation
 
 `demoPDF`: https://drive.google.com/file/d/1HK5tBKmK0JBsFMNwoYRB9fDs9rkJhGRC/view?usp=sharing
 
 
 `command`:
 ```shell
-npx mr-pdf --initialDocsURL="https://docusaurus.io/docs/en/installation" --paginationSelector=".docs-prevnext > a.docs-next" --excludeSelectors=".fixedHeaderContainer,footer.nav-footer,#docsNav,nav.onPageNav,a.edit-page-link,div.docs-prevnext" --cssStyle=".navPusher {padding-top: 0;}" --pdfMargin="20"
+npx mr-pdf --initialDocsUrl="https://docusaurus.io/docs/en/installation" --paginationSelector=".docs-prevnext > a.docs-next" --excludeSelectors=".fixedHeaderContainer,footer.nav-footer,#docsNav,nav.onPageNav,a.edit-page-link,div.docs-prevnext" --cssStyle=".navPusher {padding-top: 0;}" --pdfMargin="20"
 ```
 
 ### Docusaurus v2 beta
 https://docusaurus.io/
 
-`initialDocsURL`: https://docusaurus.io/docs
+`initialDocsUrl`: https://docusaurus.io/docs
 
 `demoPDF`:
 https://drive.google.com/file/d/1Oh0VVHfoQTJ9gYVHQTuLUaXEGrhWZdXR/view?usp=sharing
@@ -50,13 +50,13 @@ https://drive.google.com/file/d/1Oh0VVHfoQTJ9gYVHQTuLUaXEGrhWZdXR/view?usp=shari
 
 `command`:
 ```shell
-npx mr-pdf --initialDocsURL="https://docusaurus.io/docs/" --paginationSelector=".pagination-nav__item--next > a" --excludeSelectors=".margin-vert--xl a"
+npx mr-pdf --initialDocsUrl="https://docusaurus.io/docs/" --paginationSelector=".pagination-nav__item--next > a" --excludeSelectors=".margin-vert--xl a"
 ```
 
 ### Vuepress
 https://vuepress.vuejs.org/
 
-`initialDocsURL`:
+`initialDocsUrl`:
 
 https://vuepress.vuejs.org/guide/
 
@@ -64,32 +64,32 @@ https://vuepress.vuejs.org/guide/
 
 `command`:
 ```shell
-npx mr-pdf --initialDocsURL="https://vuepress.vuejs.org/guide/" --paginationSelector=".page-nav .next a" --excludeSelectors="header.navbar,aside.sidebar,footer.page-edit .edit-link,.global-ui,.page-nav"
+npx mr-pdf --initialDocsUrl="https://vuepress.vuejs.org/guide/" --paginationSelector=".page-nav .next a" --excludeSelectors="header.navbar,aside.sidebar,footer.page-edit .edit-link,.global-ui,.page-nav"
 ```
 
 ### Mkdocs
 https://www.mkdocs.org/
 
-`initialDocsURL`: https://www.mkdocs.org/
+`initialDocsUrl`: https://www.mkdocs.org/
 
 `demoPDF`: https://drive.google.com/file/d/1xVVDLmBzPQIbRs9V7Upq2S2QIjysS2-j/view?usp=sharing
 
 `command`: 
 ```shell
-npx mr-pdf --initialDocsURL="https://www.mkdocs.org/" --paginationSelector="ul.navbar-nav li.nav-item a[rel~='next']" --excludeSelectors=".navbar.fixed-top,footer,.homepage .container .row .col-md-3,#toc-collapse" --cssStyle=".col-md-9 {flex: 0 0 100%; max-width: 100%;}"
+npx mr-pdf --initialDocsUrl="https://www.mkdocs.org/" --paginationSelector="ul.navbar-nav li.nav-item a[rel~='next']" --excludeSelectors=".navbar.fixed-top,footer,.homepage .container .row .col-md-3,#toc-collapse" --cssStyle=".col-md-9 {flex: 0 0 100%; max-width: 100%;}"
 ```
 
 ### Material for mkdocs
 https://squidfunk.github.io/mkdocs-material/
 
 
-`initialDocsURL`: https://squidfunk.github.io/mkdocs-material/getting-started/
+`initialDocsUrl`: https://squidfunk.github.io/mkdocs-material/getting-started/
 
 `demoPDF`: https://drive.google.com/file/d/1oB5fyHIyZ83CUFO9d4VD4q4cJFgGlK-6/view?usp=sharing
 
 `command`: 
 ```shell
-npx mr-pdf --initialDocsURL="https://squidfunk.github.io/mkdocs-material/getting-started/" --paginationSelector="a.md-footer-nav__link--next" --excludeSelectors="header.md-header,.announce,nav.md-tabs,.md-main__inner .md-sidebar--primary,.md-main__inner .md-sidebar--secondary,footer" --cssStyle=".md-content {max-width: 100%!important;}"
+npx mr-pdf --initialDocsUrl="https://squidfunk.github.io/mkdocs-material/getting-started/" --paginationSelector="a.md-footer-nav__link--next" --excludeSelectors="header.md-header,.announce,nav.md-tabs,.md-main__inner .md-sidebar--primary,.md-main__inner .md-sidebar--secondary,footer" --cssStyle=".md-content {max-width: 100%!important;}"
 ```
 
 

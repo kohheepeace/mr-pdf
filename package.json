@@ -23,6 +23,7 @@
     "mkdocs",
     "gitbook"
   ],
+  "homepage": "https://github.com/kohheepeace/mr-pdf",
   "author": "Kohhee Peace <kohheepeace@gmail.com> (http://github.com/kohheePeace)",
   "license": "MIT",
   "dependencies": {

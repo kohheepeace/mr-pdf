@@ -12,23 +12,32 @@ export interface generatePDFOptions {
   excludeSelectors: Array<string>;
   cssStyle: string;
   puppeteerArgs: Array<string>;
+  coverTitle: string;
+  coverImage: string;
 }
 
 export async function generatePDF({
   initialDocsUrl,
   outputPDFFilename = 'mr-pdf.pdf',
-  pdfMargin,
+  pdfMargin = { top: 32, right: 32, bottom: 32, left: 32 },
   contentSelector,
   paginationSelector,
   pdfFormat,
   excludeSelectors,
   cssStyle,
   puppeteerArgs,
+  coverTitle,
+  coverImage,
 }: generatePDFOptions): Promise<void> {
   const browser = await puppeteer.launch({ args: puppeteerArgs });
   const page = await browser.newPage();
 
   let nextPageUrl = initialDocsUrl;
+
+  // Download buffer of coverImage
+  const imgSrc = await page.goto(coverImage);
+  const imgSrcBuffer = await imgSrc?.buffer();
+  const imgBase64: string = imgSrcBuffer?.toString('base64') || '';
 
   // Create a list of HTML for the content section of all pages by looping
   while (nextPageUrl) {
@@ -40,9 +49,20 @@ export async function generatePDF({
     await page.goto(`${nextPageUrl}`, { waitUntil: 'networkidle0' });
 
     // Get the HTML of the content section.
-    const html = await page.$eval(contentSelector, (element) => {
-      return element.outerHTML;
-    });
+    const htmlString = await page.evaluate(
+      ({ contentSelector }) => {
+        const element: HTMLElement | null = document.querySelector(
+          contentSelector,
+        );
+        if (element) {
+          element.style.pageBreakAfter = 'always';
+          return element.outerHTML;
+        } else {
+          return '';
+        }
+      },
+      { contentSelector },
+    );
 
     // Find next page url before DOM operations
     try {
@@ -53,7 +73,7 @@ export async function generatePDF({
       nextPageUrl = '';
     }
 
-    htmlList.push(html);
+    htmlList.push(htmlString);
     console.log(chalk.green('Success'));
   }
 
@@ -61,16 +81,40 @@ export async function generatePDF({
   await page.goto(`${initialDocsUrl}`, { waitUntil: 'networkidle0' });
 
   // Restructuring the html of a document
-  await page.evaluate((htmlList) => {
-    // Empty body content
-    const body = document.body;
-    body.innerHTML = '';
+  await page.evaluate(
+    ({ htmlList, coverTitle, imgBase64 }) => {
+      // Empty body content
+      const body = document.body;
+      body.innerHTML = '';
 
-    // Insert htmlList to body
-    htmlList.map((html: string) => {
-      body.innerHTML += html;
-    });
-  }, htmlList);
+      // Add Cover Page
+      body.innerHTML = `
+      <div
+        class="pdf-cover"
+        style="
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+        "
+      >
+      <h1>${coverTitle}</h1>
+      <img
+        src="data:image/png;base64, ${imgBase64}"
+        alt=""
+        width="140"
+        height="140"
+      />
+    </div>`;
+
+      // Insert htmlList to body
+      htmlList.map((html: string) => {
+        body.innerHTML += html;
+      });
+    },
+    { htmlList, coverTitle, imgBase64 },
+  );
 
   // Remove unnecessary HTML by using excludeSelectors
   excludeSelectors &&

@@ -36,6 +36,8 @@ program
     generatePuppeteerPDFMargin,
   )
   .option('--pdfFormat <format>', 'pdf format ex: A3, A4...')
+  .option('--coverTitle <title>', 'title for PDF cover')
+  .option('--coverImage <src>', 'image for PDF cover')
   .action((options: generatePDFOptions) => {
     generatePDF(options)
       .then(() => {

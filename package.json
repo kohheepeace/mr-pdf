@@ -2,7 +2,7 @@
   "name": "mr-pdf",
   "version": "0.2.3",
   "description": "Generate pdf from document",
-  "main": "lib/index.js",
+  "main": "lib/cli.js",
   "scripts": {
     "dev": "tsc --watch",
     "build": "tsc",
@@ -14,7 +14,7 @@
     "node": "^10.17.0 || >=11.14.0"
   },
   "bin": {
-    "mr-pdf": "bin/index.js"
+    "mr-pdf": "lib/cli.js"
   },
   "keywords": [
     "pdf",
@@ -23,6 +23,7 @@
     "mkdocs",
     "gitbook"
   ],
+  "homepage": "https://github.com/kohheepeace/mr-pdf",
   "author": "Kohhee Peace <kohheepeace@gmail.com> (http://github.com/kohheePeace)",
   "license": "MIT",
   "dependencies": {
@@ -32,6 +33,8 @@
     "puppeteer": "^2.1.1"
   },
   "devDependencies": {
+    "@tsconfig/node14": "^1.0.0",
+    "@types/node": "^15.6.1",
     "@types/puppeteer": "^2.0.1",
     "@typescript-eslint/eslint-plugin": "^3.9.0",
     "@typescript-eslint/parser": "^3.9.0",

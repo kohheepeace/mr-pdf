@@ -12,8 +12,14 @@ import {
 program
   .name('mr-pdf')
   .requiredOption(
-    '--initialDocsURL <url>',
-    'set url to start generating PDF from',
+    '--initialDocURLs <urls>',
+    'set urls to start generating PDF from',
+    commaSeparatedList,
+  )
+  .requiredOption(
+    '--excludeURLs <urls>',
+    'urls to be excluded in PDF',
+    commaSeparatedList,
   )
   .requiredOption(
     '--contentSelector <selector>',

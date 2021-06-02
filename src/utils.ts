@@ -3,7 +3,8 @@ import puppeteer = require('puppeteer');
 
 let contentHTML = '';
 export interface generatePDFOptions {
-  initialDocsURL: string;
+  initialDocURLs: Array<string>;
+  excludeURLs: Array<string>;
   outputPDFFilename: string;
   pdfMargin: puppeteer.PDFOptions['margin'];
   contentSelector: string;
@@ -17,7 +18,8 @@ export interface generatePDFOptions {
 }
 
 export async function generatePDF({
-  initialDocsURL,
+  initialDocURLs,
+  excludeURLs,
   outputPDFFilename = 'mr-pdf.pdf',
   pdfMargin = { top: 32, right: 32, bottom: 32, left: 32 },
   contentSelector,
@@ -32,55 +34,64 @@ export async function generatePDF({
   const browser = await puppeteer.launch({ args: puppeteerArgs });
   const page = await browser.newPage();
 
-  let nextPageURL = initialDocsURL;
+  for (const url of initialDocURLs) {
+    let nextPageURL = url;
+
+    // Create a list of HTML for the content section of all pages by looping
+    while (nextPageURL) {
+      console.log();
+      console.log(chalk.cyan(`Retrieving html from ${nextPageURL}`));
+      console.log();
+
+      // Go to the page specified by nextPageURL
+      await page.goto(`${nextPageURL}`, {
+        waitUntil: 'networkidle0',
+        timeout: 0,
+      });
+
+      // Get the HTML of the content section.
+      const html = await page.evaluate(
+        ({ contentSelector }) => {
+          const element: HTMLElement | null = document.querySelector(
+            contentSelector,
+          );
+          if (element) {
+            element.style.pageBreakAfter = 'always';
+            return element.outerHTML;
+          } else {
+            return '';
+          }
+        },
+        { contentSelector },
+      );
+
+      // Make joined content html
+      if (excludeURLs.includes(nextPageURL)) {
+        console.log(chalk.green('This URL is excluded.'));
+      } else {
+        contentHTML += html;
+        console.log(chalk.green('Success'));
+      }
+
+      // Find next page url before DOM operations
+      nextPageURL = await page.evaluate((paginationSelector) => {
+        const element = document.querySelector(paginationSelector);
+        if (element) {
+          return (element as HTMLLinkElement).href;
+        } else {
+          return '';
+        }
+      }, paginationSelector);
+    }
+  }
 
   // Download buffer of coverImage
   const imgSrc = await page.goto(coverImage);
   const imgSrcBuffer = await imgSrc?.buffer();
   const imgBase64: string = imgSrcBuffer?.toString('base64') || '';
 
-  // Create a list of HTML for the content section of all pages by looping
-  while (nextPageURL) {
-    console.log();
-    console.log(chalk.cyan(`Retrieving html from ${nextPageURL}`));
-    console.log();
-
-    // Go to the page specified by nextPageURL
-    await page.goto(`${nextPageURL}`, { waitUntil: 'networkidle0' });
-
-    // Get the HTML of the content section.
-    const html = await page.evaluate(
-      ({ contentSelector }) => {
-        const element: HTMLElement | null = document.querySelector(
-          contentSelector,
-        );
-        if (element) {
-          element.style.pageBreakAfter = 'always';
-          return element.outerHTML;
-        } else {
-          return '';
-        }
-      },
-      { contentSelector },
-    );
-
-    // Find next page url before DOM operations
-    nextPageURL = await page.evaluate((paginationSelector) => {
-      const element = document.querySelector(paginationSelector);
-      if (element) {
-        return (element as HTMLLinkElement).href;
-      } else {
-        return '';
-      }
-    }, paginationSelector);
-
-    // Make joined content html
-    contentHTML += html;
-    console.log(chalk.green('Success'));
-  }
-
   // Go to initial page
-  await page.goto(`${initialDocsURL}`, { waitUntil: 'networkidle0' });
+  await page.goto(`${initialDocURLs[0]}`, { waitUntil: 'networkidle0' });
 
   const coverHTML = `
   <div

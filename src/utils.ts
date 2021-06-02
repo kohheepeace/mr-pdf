@@ -156,8 +156,9 @@ function generateToc(contentHtml: string) {
     id: string;
   }> = [];
 
+  // Create TOC only for h1~h3
   const modifiedContentHTML = contentHtml.replace(
-    /<h[1-6](.+?)<\/h[1-6]( )*>/g,
+    /<h[1-3](.+?)<\/h[1-3]( )*>/g,
     htmlReplacer,
   );
 
@@ -172,13 +173,16 @@ function generateToc(contentHtml: string) {
       headers.length
     }`;
 
+    // level is h<level>
+    const level = Number(matchedStr[matchedStr.indexOf('h') + 1]);
+
     headers.push({
       header: headerText,
-      level: Number(matchedStr[matchedStr.indexOf('h') + 1]),
+      level,
       id: headerId,
     });
 
-    const modifiedContentHTML = matchedStr.replace(/<h[1-6].*?>/g, (header) => {
+    const modifiedContentHTML = matchedStr.replace(/<h[1-3].*?>/g, (header) => {
       if (header.match(/id( )*=( )*"/g)) {
         return header.replace(/id( )*=( )*"/g, `id="${headerId} `);
       } else {

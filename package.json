@@ -6,7 +6,6 @@
   "scripts": {
     "dev": "tsc --watch",
     "build": "tsc",
-    "prepare": "rimraf lib/ && yarn run build",
     "lint": "eslint \"*/**/*.{js,ts}\"",
     "lintfix": "eslint \"*/**/*.{js,ts}\" --fix"
   },

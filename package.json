@@ -1,11 +1,12 @@
 {
   "name": "mr-pdf",
-  "version": "0.2.5",
+  "version": "0.2.4",
   "description": "Generate pdf from document",
   "main": "lib/cli.js",
   "scripts": {
     "dev": "tsc --watch",
     "build": "tsc",
+    "prepare": "yarn run build",
     "lint": "eslint \"*/**/*.{js,ts}\"",
     "lintfix": "eslint \"*/**/*.{js,ts}\" --fix"
   },

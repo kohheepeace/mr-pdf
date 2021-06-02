@@ -1,9 +1,9 @@
 import chalk = require('chalk');
 import puppeteer = require('puppeteer');
 
-const htmlList: Array<string> = [];
+let contentHTML = '';
 export interface generatePDFOptions {
-  initialDocsUrl: string;
+  initialDocsURL: string;
   outputPDFFilename: string;
   pdfMargin: puppeteer.PDFOptions['margin'];
   contentSelector: string;
@@ -17,7 +17,7 @@ export interface generatePDFOptions {
 }
 
 export async function generatePDF({
-  initialDocsUrl,
+  initialDocsURL,
   outputPDFFilename = 'mr-pdf.pdf',
   pdfMargin = { top: 32, right: 32, bottom: 32, left: 32 },
   contentSelector,
@@ -32,7 +32,7 @@ export async function generatePDF({
   const browser = await puppeteer.launch({ args: puppeteerArgs });
   const page = await browser.newPage();
 
-  let nextPageUrl = initialDocsUrl;
+  let nextPageURL = initialDocsURL;
 
   // Download buffer of coverImage
   const imgSrc = await page.goto(coverImage);
@@ -40,16 +40,16 @@ export async function generatePDF({
   const imgBase64: string = imgSrcBuffer?.toString('base64') || '';
 
   // Create a list of HTML for the content section of all pages by looping
-  while (nextPageUrl) {
+  while (nextPageURL) {
     console.log();
-    console.log(chalk.cyan(`Retrieving html from ${nextPageUrl}`));
+    console.log(chalk.cyan(`Retrieving html from ${nextPageURL}`));
     console.log();
 
-    // Go to the page specified by nextPageUrl
-    await page.goto(`${nextPageUrl}`, { waitUntil: 'networkidle0' });
+    // Go to the page specified by nextPageURL
+    await page.goto(`${nextPageURL}`, { waitUntil: 'networkidle0' });
 
     // Get the HTML of the content section.
-    const htmlString = await page.evaluate(
+    const html = await page.evaluate(
       ({ contentSelector }) => {
         const element: HTMLElement | null = document.querySelector(
           contentSelector,
@@ -65,55 +65,64 @@ export async function generatePDF({
     );
 
     // Find next page url before DOM operations
-    try {
-      nextPageUrl = await page.$eval(paginationSelector, (element) => {
+    nextPageURL = await page.evaluate((paginationSelector) => {
+      const element = document.querySelector(paginationSelector);
+      if (element) {
         return (element as HTMLLinkElement).href;
-      });
-    } catch (e) {
-      nextPageUrl = '';
-    }
+      } else {
+        return '';
+      }
+    }, paginationSelector);
 
-    htmlList.push(htmlString);
+    // Make joined content html
+    contentHTML += html;
     console.log(chalk.green('Success'));
   }
 
   // Go to initial page
-  await page.goto(`${initialDocsUrl}`, { waitUntil: 'networkidle0' });
+  await page.goto(`${initialDocsURL}`, { waitUntil: 'networkidle0' });
+
+  const coverHTML = `
+  <div
+    class="pdf-cover"
+    style="
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    "
+  >
+    <h1 class="cover-title">${coverTitle}</h1>
+    <img
+      class="cover-img"
+      src="data:image/png;base64, ${imgBase64}"
+      alt=""
+      width="140"
+      height="140"
+    />
+  </div>`;
+
+  // Add Toc
+  const { modifiedContentHTML, tocHTML } = generateToc(contentHTML);
 
   // Restructuring the html of a document
   await page.evaluate(
-    ({ htmlList, coverTitle, imgBase64 }) => {
+    ({ coverHTML, tocHTML, modifiedContentHTML }) => {
       // Empty body content
       const body = document.body;
       body.innerHTML = '';
 
-      // Add Cover Page
-      body.innerHTML = `
-      <div
-        class="pdf-cover"
-        style="
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          height: 100vh;
-        "
-      >
-      <h1>${coverTitle}</h1>
-      <img
-        src="data:image/png;base64, ${imgBase64}"
-        alt=""
-        width="140"
-        height="140"
-      />
-    </div>`;
+      // Add Cover
+      body.innerHTML += coverHTML;
 
-      // Insert htmlList to body
-      htmlList.map((html: string) => {
-        body.innerHTML += html;
-      });
+      // Add toc
+      body.innerHTML += tocHTML;
+
+      // Add body content
+      body.innerHTML += modifiedContentHTML;
     },
-    { htmlList, coverTitle, imgBase64 },
+    { coverHTML, tocHTML, modifiedContentHTML },
   );
 
   // Remove unnecessary HTML by using excludeSelectors
@@ -138,4 +147,63 @@ export async function generatePDF({
     printBackground: true,
     margin: pdfMargin,
   });
+}
+
+function generateToc(contentHtml: string) {
+  const headers: Array<{
+    header: string;
+    level: number;
+    id: string;
+  }> = [];
+
+  const modifiedContentHTML = contentHtml.replace(
+    /<h[1-6](.+?)<\/h[1-6]( )*>/g,
+    htmlReplacer,
+  );
+
+  function htmlReplacer(matchedStr: string) {
+    // docusaurus inserts #s into headers for direct links to the header
+    const headerText = matchedStr
+      .replace(/<a[^>]*>#<\/a( )*>/g, '')
+      .replace(/<[^>]*>/g, '')
+      .trim();
+
+    const headerId = `${Math.random().toString(36).substr(2, 5)}-${
+      headers.length
+    }`;
+
+    headers.push({
+      header: headerText,
+      level: Number(matchedStr[matchedStr.indexOf('h') + 1]),
+      id: headerId,
+    });
+
+    const modifiedContentHTML = matchedStr.replace(/<h[1-6].*?>/g, (header) => {
+      if (header.match(/id( )*=( )*"/g)) {
+        return header.replace(/id( )*=( )*"/g, `id="${headerId} `);
+      } else {
+        return header.substring(0, header.length - 1) + ` id="${headerId}">`;
+      }
+    });
+
+    return modifiedContentHTML;
+  }
+
+  const toc = headers
+    .map(
+      (header) =>
+        `<li class="toc-item toc-item-${header.level}" style="margin-left:${
+          (header.level - 1) * 20
+        }px"><a href="#${header.id}">${header.header}</a></li>`,
+    )
+    .join('\n');
+
+  const tocHTML = `
+  <div class="toc-page" style="page-break-after: always;">
+    <h1 class="toc-header">Table of contents:</h1>
+    <ul class="toc-list">${toc}</ul>
+  </div>
+  `;
+
+  return { modifiedContentHTML, tocHTML };
 }

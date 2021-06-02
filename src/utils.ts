@@ -3,7 +3,7 @@ import puppeteer = require('puppeteer');
 
 let contentHTML = '';
 export interface generatePDFOptions {
-  initialDocsUrl: string;
+  initialDocsURL: string;
   outputPDFFilename: string;
   pdfMargin: puppeteer.PDFOptions['margin'];
   contentSelector: string;
@@ -17,7 +17,7 @@ export interface generatePDFOptions {
 }
 
 export async function generatePDF({
-  initialDocsUrl,
+  initialDocsURL,
   outputPDFFilename = 'mr-pdf.pdf',
   pdfMargin = { top: 32, right: 32, bottom: 32, left: 32 },
   contentSelector,
@@ -32,7 +32,7 @@ export async function generatePDF({
   const browser = await puppeteer.launch({ args: puppeteerArgs });
   const page = await browser.newPage();
 
-  let nextPageUrl = initialDocsUrl;
+  let nextPageURL = initialDocsURL;
 
   // Download buffer of coverImage
   const imgSrc = await page.goto(coverImage);
@@ -40,13 +40,13 @@ export async function generatePDF({
   const imgBase64: string = imgSrcBuffer?.toString('base64') || '';
 
   // Create a list of HTML for the content section of all pages by looping
-  while (nextPageUrl) {
+  while (nextPageURL) {
     console.log();
-    console.log(chalk.cyan(`Retrieving html from ${nextPageUrl}`));
+    console.log(chalk.cyan(`Retrieving html from ${nextPageURL}`));
     console.log();
 
-    // Go to the page specified by nextPageUrl
-    await page.goto(`${nextPageUrl}`, { waitUntil: 'networkidle0' });
+    // Go to the page specified by nextPageURL
+    await page.goto(`${nextPageURL}`, { waitUntil: 'networkidle0' });
 
     // Get the HTML of the content section.
     const html = await page.evaluate(
@@ -65,7 +65,7 @@ export async function generatePDF({
     );
 
     // Find next page url before DOM operations
-    nextPageUrl = await page.evaluate((paginationSelector) => {
+    nextPageURL = await page.evaluate((paginationSelector) => {
       const element = document.querySelector(paginationSelector);
       if (element) {
         return (element as HTMLLinkElement).href;
@@ -80,7 +80,7 @@ export async function generatePDF({
   }
 
   // Go to initial page
-  await page.goto(`${initialDocsUrl}`, { waitUntil: 'networkidle0' });
+  await page.goto(`${initialDocsURL}`, { waitUntil: 'networkidle0' });
 
   const coverHTML = `
   <div

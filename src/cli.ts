@@ -12,7 +12,7 @@ import {
 program
   .name('mr-pdf')
   .requiredOption(
-    '--initialDocsUrl <url>',
+    '--initialDocsURL <url>',
     'set url to start generating PDF from',
   )
   .requiredOption(

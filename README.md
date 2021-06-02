@@ -40,12 +40,15 @@ npx mr-pdf --initialDocsURL="https://docusaurus.io/docs/en/installation" --pagin
 ```
 
 ### Docusaurus v2 beta
+![20210603060438](https://user-images.githubusercontent.com/29557494/120552058-b4299e00-c431-11eb-833e-1ac1338b0a70.gif)
+
+
 https://docusaurus.io/
 
 `initialDocsURL`: https://docusaurus.io/docs
 
 `demoPDF`:
-https://drive.google.com/file/d/1Oh0VVHfoQTJ9gYVHQTuLUaXEGrhWZdXR/view?usp=sharing
+https://drive.google.com/file/d/12IXlbRGKxDwUKK_GDy0hyBwcHUUell8D/view?usp=sharing
 
 
 `command`:

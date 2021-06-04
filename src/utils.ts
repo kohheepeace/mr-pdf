@@ -66,7 +66,7 @@ export async function generatePDF({
       );
 
       // Make joined content html
-      if (excludeURLs.includes(nextPageURL)) {
+      if (excludeURLs && excludeURLs.includes(nextPageURL)) {
         console.log(chalk.green('This URL is excluded.'));
       } else {
         contentHTML += html;

@@ -9,6 +9,8 @@ npx mr-pdf --initialDocsURL="https://example.com" --paginationSelector="li > a"
 
 ## 🍗 CLI Options
 
+**❗NEED DOCS UPDATE!**
+
 - `--initialDocsURL`:               set url to start generating PDF from.
 
 - `--paginationSelector`:  used to find next page to be printed for looping.

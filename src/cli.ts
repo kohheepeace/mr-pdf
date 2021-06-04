@@ -16,7 +16,7 @@ program
     'set urls to start generating PDF from',
     commaSeparatedList,
   )
-  .requiredOption(
+  .option(
     '--excludeURLs <urls>',
     'urls to be excluded in PDF',
     commaSeparatedList,

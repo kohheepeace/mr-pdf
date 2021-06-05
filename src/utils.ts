@@ -48,14 +48,14 @@ export async function generatePDF({
         waitUntil: 'networkidle0',
         timeout: 0,
       });
-
-      // Get the HTML of the content section.
+      // Get the HTML string of the content section.
       const html = await page.evaluate(
         ({ contentSelector }) => {
           const element: HTMLElement | null = document.querySelector(
             contentSelector,
           );
           if (element) {
+            // Add pageBreak for PDF
             element.style.pageBreakAfter = 'always';
 
             // Open <details> tag
@@ -92,13 +92,16 @@ export async function generatePDF({
     }
   }
 
-  // Download buffer of coverImage
-  const imgSrc = await page.goto(coverImage);
-  const imgSrcBuffer = await imgSrc?.buffer();
-  const imgBase64: string = imgSrcBuffer?.toString('base64') || '';
-
   // Go to initial page
   await page.goto(`${initialDocURLs[0]}`, { waitUntil: 'networkidle0' });
+
+  // Download buffer of coverImage if exists
+  let imgBase64 = '';
+  if (coverImage) {
+    const imgSrc = await page.goto(coverImage);
+    const imgSrcBuffer = await imgSrc?.buffer();
+    imgBase64 = imgSrcBuffer?.toString('base64') || '';
+  }
 
   const coverHTML = `
   <div
@@ -109,6 +112,7 @@ export async function generatePDF({
       justify-content: center;
       align-items: center;
       height: 100vh;
+      page-break-after: always;
     "
   >
     <h1 class="cover-title">${coverTitle}</h1>

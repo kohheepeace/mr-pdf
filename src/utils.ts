@@ -57,6 +57,13 @@ export async function generatePDF({
           );
           if (element) {
             element.style.pageBreakAfter = 'always';
+
+            // Open <details> tag
+            const detailsArray = element.getElementsByTagName('details');
+            Array.from(detailsArray).forEach((element) => {
+              element.open = true;
+            });
+
             return element.outerHTML;
           } else {
             return '';

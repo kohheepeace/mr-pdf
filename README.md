@@ -110,4 +110,5 @@ This plugin uses [puppeteer](https://github.com/puppeteer/puppeteer) to make PDF
 ## 🎉 Thanks
 This repo's code is coming from https://github.com/KohheePeace/docusaurus-pdf.
 
-Thanks for awesome code made by [@maxarndt](https://github.com/maxarndt) and [@aloisklink](https://github.com/aloisklink)
+Thanks for awesome code made by [@maxarndt](https://github.com/maxarndt) and [@aloisklink](https://github.com/aloisklink).
+[@bojl](https://github.com/bojl] approach to make TOC was awesome and breakthrough.

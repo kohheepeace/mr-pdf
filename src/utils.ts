@@ -92,9 +92,6 @@ export async function generatePDF({
     }
   }
 
-  // Go to initial page
-  await page.goto(`${initialDocURLs[0]}`, { waitUntil: 'networkidle0' });
-
   // Download buffer of coverImage if exists
   let imgBase64 = '';
   if (coverImage) {
@@ -102,6 +99,9 @@ export async function generatePDF({
     const imgSrcBuffer = await imgSrc?.buffer();
     imgBase64 = imgSrcBuffer?.toString('base64') || '';
   }
+
+  // Go to initial page
+  await page.goto(`${initialDocURLs[0]}`, { waitUntil: 'networkidle0' });
 
   const coverHTML = `
   <div

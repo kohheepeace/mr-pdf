@@ -25,6 +25,12 @@ npx mr-pdf --initialDocsURL="https://example.com" --paginationSelector="li > a"
 
 - `--pdfFormat`:            pdf format ex: `--pdfFormat="A3"`. Please check this link for available formats [Puppeteer document](https://pptr.dev/#?product=Puppeteer&version=v5.2.1&show=api-pagepdfoptions)
 
+- `--disableTOC`: Optional toggle to show the table of contents or not. 
+
+- `coverTitle`: Title for the PDF cover.
+
+- `coverSub`: Subtitle the for PDF cover.
+
 
 ## 🎨 Examples and Demo PDF
 

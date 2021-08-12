@@ -29,7 +29,7 @@ npx mr-pdf --initialDocsURL="https://example.com" --paginationSelector="li > a"
 
 - `coverTitle`: Title for the PDF cover.
 
-- `coverSub`: Subtitle the for PDF cover.
+- `coverSub`: Subtitle the for PDF cover. Add \<br/> tags for multiple lines.
 
 
 ## 🎨 Examples and Demo PDF

@@ -16,6 +16,7 @@ export interface generatePDFOptions {
   coverTitle: string;
   coverImage: string;
   disableTOC: boolean;
+  coverSub: string;
 }
 
 export async function generatePDF({
@@ -32,6 +33,7 @@ export async function generatePDF({
   coverTitle,
   coverImage,
   disableTOC,
+  coverSub,
 }: generatePDFOptions): Promise<void> {
   const browser = await puppeteer.launch({ args: puppeteerArgs });
   const page = await browser.newPage();
@@ -114,10 +116,12 @@ export async function generatePDF({
       justify-content: center;
       align-items: center;
       height: 100vh;
-      page-break-after: always;
+      page-break-after: always;  
+      text-align: center;
     "
   >
-    <h1 class="cover-title">${coverTitle}</h1>
+    ${coverTitle ? `<h1>${coverTitle}</h1>` : ''}
+    ${coverSub ? `<h3>${coverSub}</h3>` : ''}
     <img
       class="cover-img"
       src="data:image/png;base64, ${imgBase64}"

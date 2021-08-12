@@ -15,6 +15,7 @@ export interface generatePDFOptions {
   puppeteerArgs: Array<string>;
   coverTitle: string;
   coverImage: string;
+  disableTOC: boolean;
 }
 
 export async function generatePDF({
@@ -30,6 +31,7 @@ export async function generatePDF({
   puppeteerArgs,
   coverTitle,
   coverImage,
+  disableTOC,
 }: generatePDFOptions): Promise<void> {
   const browser = await puppeteer.launch({ args: puppeteerArgs });
   const page = await browser.newPage();
@@ -130,7 +132,7 @@ export async function generatePDF({
 
   // Restructuring the html of a document
   await page.evaluate(
-    ({ coverHTML, tocHTML, modifiedContentHTML }) => {
+    ({ coverHTML, tocHTML, modifiedContentHTML, disableTOC }) => {
       // Empty body content
       const body = document.body;
       body.innerHTML = '';
@@ -139,12 +141,12 @@ export async function generatePDF({
       body.innerHTML += coverHTML;
 
       // Add toc
-      body.innerHTML += tocHTML;
+      if (!disableTOC) body.innerHTML += tocHTML;
 
       // Add body content
       body.innerHTML += modifiedContentHTML;
     },
-    { coverHTML, tocHTML, modifiedContentHTML },
+    { coverHTML, tocHTML, modifiedContentHTML, disableTOC },
   );
 
   // Remove unnecessary HTML by using excludeSelectors

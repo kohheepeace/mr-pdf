@@ -44,6 +44,7 @@ program
   .option('--pdfFormat <format>', 'pdf format ex: A3, A4...')
   .option('--coverTitle <title>', 'title for PDF cover')
   .option('--coverImage <src>', 'image for PDF cover. *.svg file not working!')
+  .option('--disableTOC', 'disable table of contents')
   .action((options: generatePDFOptions) => {
     generatePDF(options)
       .then(() => {

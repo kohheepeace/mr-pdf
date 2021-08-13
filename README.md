@@ -4,32 +4,57 @@ This is a PDF generator from document website such as `docusaurus`, `vuepress`, 
 
 ## ⚡ Usage
 ```shell
-npx mr-pdf --initialDocsURL="https://example.com" --paginationSelector="li > a"
+npx mr-pdf --initialDocsURL="https://example.com" --contentSelector="article" --paginationSelector="li > a"
 ```
 
 ## 🍗 CLI Options
 
-**❗NEED DOCS UPDATE!**
+| Flag / Example                    | Default       | Required | Description                                                                                                     |
+| --------------------------------- | ------------- | -------- | --------------------------------------------------------------------------------------------------------------- |
+| `--initialDocURLs <url>`          | -             | **Yes**  | URL to start generating PDF from.                                                                               |
+| `--contentSelector <selector>`    | -             | **Yes**  | CSS selector used to find the part of main content.                                                             |
+| `--paginationSelector <selector>` | -             | **Yes**  | CSS selector used to find next page.                                                                            |
+| `--excludeURLs <urls>`            | -             | No       | URLs to be excluded from PDF.                                                                                   |
+| `--excludeSelectors <selectors>`  | -             | No       | Elements to be excluded. Separate selectors by comma **without spaces**. Spaces can be used inside selectors.   |
+| `--cssStyle <cssString>`          | -             | No       | CSS styles to modify the PDF. Project owners can also use `@media print { }` add CSS for the PDF.               |
+| `--outputPDFFilename <filename>`  | `mr-pdf.pdf`  | No       | Name of the PDF file.                                                                                           |
+| `--pdfMargin <margin>`            | `32,32,32,32` | No       | Margin around the PDF file. Separate values by comma **without spaces**.                                        |
+| `--pdfFormat <format>`            | -             | No       | PDF format. [See options](https://www.puppeteersharp.com/api/PuppeteerSharp.Media.PaperFormat.html#properties). |
+| `--coverTitle <title>`            | -             | No       | Title for the PDF cover.                                                                                        |
+| `--coverSub <subtitle>`           | -             | No       | Subtitle the for PDF cover. Add `<br/>` tags for multiple lines.                                                |
+| `--coverImage <src>`              | -             | No       | Image for the PDF cover.                                                                                        |
+| `--disableTOC`                    | -             | No       | Disable table of contents.                                                                                      |
 
-- `--initialDocsURL`:               set url to start generating PDF from.
+## CSS Classes
 
-- `--paginationSelector`:  used to find next page to be printed for looping.
+- `.pdf-cover`
+- `.cover-title`
+- `.cover-subtitle`
+- `.cover-img`
 
-- `--excludeSelectors`: exclude selectors from PDF. Separate each selector **with comma and no space**. But you can use space in each selector. ex: `--excludeSelectors=".nav,.next > a"`
+The structure for the cover page is as follows:
 
-- `--cssStyle`: css style to adjust PDF output ex: `--cssStyle="body{padding-top: 0;}"` *If you're project owner you can use `@media print { }` to edit CSS for PDF.
+```html
+  <div
+    class="pdf-cover"
+    style="
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        page-break-after: always;  
+        text-align: center;">
 
-- `--outputPDFFilename`:   name of the output PDF file. Default is `mr-pdf.pdf`.
-
-- `--pdfMargin`: set margin around PDF file. Separate each margin **with comma and no space**. ex: `--pdfMargin="10,20,30,40"`. This sets margin `top: 10px, right: 20px, bottom: 30px, left: 40px`.
-
-- `--pdfFormat`:            pdf format ex: `--pdfFormat="A3"`. Please check this link for available formats [Puppeteer document](https://pptr.dev/#?product=Puppeteer&version=v5.2.1&show=api-pagepdfoptions)
-
-- `--disableTOC`: Optional toggle to show the table of contents or not. 
-
-- `coverTitle`: Title for the PDF cover.
-
-- `coverSub`: Subtitle the for PDF cover. Add \<br/> tags for multiple lines.
+    <h1 class="cover-title"> Title </h1>
+    <h3 class="cover-subtitle"> Subtitle </h3>
+    <img 
+        class="cover-img" 
+        src="example.png"
+        width="140"
+        height="140"/>
+  </div>`
+```
 
 
 ## 🎨 Examples and Demo PDF

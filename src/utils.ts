@@ -98,8 +98,10 @@ export async function generatePDF({
 
   // Download buffer of coverImage if exists
   let imgBase64 = '';
+  let isSVG = false;
   if (coverImage) {
     const imgSrc = await page.goto(coverImage);
+    isSVG = imgSrc?.headers()?.['content-type'] === 'image/svg+xml';
     const imgSrcBuffer = await imgSrc?.buffer();
     imgBase64 = imgSrcBuffer?.toString('base64') || '';
   }
@@ -120,15 +122,15 @@ export async function generatePDF({
       text-align: center;
     "
   >
-    ${coverTitle ? `<h1>${coverTitle}</h1>` : ''}
-    ${coverSub ? `<h3>${coverSub}</h3>` : ''}
-    <img
-      class="cover-img"
-      src="data:image/png;base64, ${imgBase64}"
-      alt=""
-      width="140"
-      height="140"
-    />
+    ${coverTitle ? `<h1 class="cover-title">${coverTitle}</h1>` : ''}
+    ${coverSub ? `<h3 class="cover-subtitle">${coverSub}</h3>` : ''}
+    ${
+      coverImage
+        ? `<img class="cover-img" src="data:image/${
+            isSVG ? 'svg+xml' : 'png'
+          };base64, ${imgBase64}" alt="" width="140"height="140" />`
+        : ''
+    }
   </div>`;
 
   // Add Toc

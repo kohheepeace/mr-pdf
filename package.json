@@ -1,6 +1,6 @@
 {
   "name": "mr-pdf",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Generate pdf from document",
   "main": "lib/cli.js",
   "scripts": {

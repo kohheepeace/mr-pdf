@@ -6,6 +6,6 @@
     "outDir": "lib",
     "resolveJsonModule": true
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "types/api.d.ts"],
   "exclude": ["node_modules", "lib"]
 }

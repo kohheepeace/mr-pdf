@@ -3,27 +3,47 @@
 This is a PDF generator from document website such as `docusaurus`, `vuepress`, `mkdocs`.
 
 ## ⚡ Usage
+
+### CLI
+
 ```shell
 npx mr-pdf --initialDocsURL="https://example.com" --contentSelector="article" --paginationSelector="li > a"
 ```
 
-## 🍗 CLI Options
+### Module
+```js
+import mrpdf from "mr-pdf";
 
-| Flag / Example                    | Default       | Required | Description                                                                                                     |
-| --------------------------------- | ------------- | -------- | --------------------------------------------------------------------------------------------------------------- |
-| `--initialDocURLs <url>`          | -             | **Yes**  | URL to start generating PDF from.                                                                               |
-| `--contentSelector <selector>`    | -             | **Yes**  | CSS selector used to find the part of main content.                                                             |
-| `--paginationSelector <selector>` | -             | **Yes**  | CSS selector used to find next page.                                                                            |
-| `--excludeURLs <urls>`            | -             | No       | URLs to be excluded from PDF.                                                                                   |
-| `--excludeSelectors <selectors>`  | -             | No       | Elements to be excluded. Separate selectors by comma **without spaces**. Spaces can be used inside selectors.   |
-| `--cssStyle <cssString>`          | -             | No       | CSS styles to modify the PDF. Project owners can also use `@media print { }` add CSS for the PDF.               |
-| `--outputPDFFilename <filename>`  | `mr-pdf.pdf`  | No       | Name of the PDF file.                                                                                           |
-| `--pdfMargin <margin>`            | `32,32,32,32` | No       | Margin around the PDF file. Separate values by comma **without spaces**.                                        |
-| `--pdfFormat <format>`            | -             | No       | PDF format. [See options](https://www.puppeteersharp.com/api/PuppeteerSharp.Media.PaperFormat.html#properties). |
-| `--coverTitle <title>`            | -             | No       | Title for the PDF cover.                                                                                        |
-| `--coverSub <subtitle>`           | -             | No       | Subtitle the for PDF cover. Add `<br/>` tags for multiple lines.                                                |
-| `--coverImage <src>`              | -             | No       | Image for the PDF cover.                                                                                        |
-| `--disableTOC`                    | -             | No       | Disable table of contents.                                                                                      |
+export default async function (req, res) {
+	const file = await mrpdf({
+		initialDocURLs: ["https://example.com"],
+		contentSelector: "article",
+		paginationSelector: "li > a",
+		coverTitle: "A Very Cool Title",
+		coverSub: "An equally interesting subtitle",
+	});
+
+	res.send(file);
+}
+```
+
+## 🍗 Options
+
+| Flag / Property                                                          | Default       | Required | Description                                                                                                     |
+| ------------------------------------------------------------------------ | ------------- | -------- | --------------------------------------------------------------------------------------------------------------- |
+| `--initialDocURLs <urls>` <br/> `initialDocURLs: string[]`               | -             | **Yes**  | URL to start generating PDF from.                                                                               |
+| `--contentSelector <selector>` <br/> `contentSelector: string`           | -             | **Yes**  | CSS selector used to find the part of main content.                                                             |
+| `--paginationSelector <selector>` <br/> `paginationSelector: string`     | -             | **Yes**  | CSS selector used to find next page.                                                                            |
+| `--excludeURLs <urls>` <br/> `excludeURLs: string[]`                     | -             | No       | URLs to be excluded from PDF.                                                                                   |
+| `--excludeSelectors <selectors>` <br/> `excludeSelectors: string[]`      | -             | No       | Elements to be excluded. Separate selectors by comma **without spaces**. Spaces can be used inside selectors.   |
+| `--cssStyle <cssString>` <br/> `cssStyle: string`                        | -             | No       | CSS styles to modify the PDF. Project owners can also use `@media print { }` add CSS for the PDF.               |
+| `--outputPDFFilename <filename>` <br/> `outputPDFFilename: string`       | `mr-pdf.pdf`  | No       | Name of the PDF file.                                                                                           |
+| `--pdfMargin <margin>` <br/> `pdfMargin: puppeteer.PDFOptions['margin']` | `32,32,32,32` | No       | Margin around the PDF file. Separate values by comma **without spaces**.                                        |
+| `--pdfFormat <format>` <br/> `pdfFormat: puppeteer.PDFFormat`            | -             | No       | PDF format. [See options](https://www.puppeteersharp.com/api/PuppeteerSharp.Media.PaperFormat.html#properties). |
+| `--coverTitle <title>` <br/> `coverTitle: string`                        | -             | No       | Title for the PDF cover.                                                                                        |
+| `--coverSub <subtitle>` <br/> `coverSub: string`                         | -             | No       | Subtitle the for PDF cover. Add `<br/>` tags for multiple lines.                                                |
+| `--coverImage <src>` <br/> `coverImage: string`                          | -             | No       | URI to image for the PDF cover.                                                                                 |
+| `--disableTOC` <br/> `disableTOC: boolean`                               | -             | No       | Disable table of contents.                                                                                      |
 
 ## CSS Classes
 
@@ -57,7 +77,7 @@ The structure for the cover page is as follows:
 ```
 
 
-## 🎨 Examples and Demo PDF
+## 🎨 Examples and Demo PDFs
 
 ### Docusaurus v1
 https://docusaurus.io/en/

@@ -34,7 +34,7 @@ export async function generatePDF({
   coverImage,
   disableTOC,
   coverSub,
-}: generatePDFOptions): Promise<void> {
+}: generatePDFOptions): Promise<Buffer> {
   const browser = await puppeteer.launch({ args: puppeteerArgs });
   const page = await browser.newPage();
 
@@ -171,12 +171,14 @@ export async function generatePDF({
     await page.addStyleTag({ content: cssStyle });
   }
 
-  await page.pdf({
+  const file = await page.pdf({
     path: outputPDFFilename,
     format: pdfFormat,
     printBackground: true,
     margin: pdfMargin,
   });
+
+  return file;
 }
 
 function generateToc(contentHtml: string) {

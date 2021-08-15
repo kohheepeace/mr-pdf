@@ -4,19 +4,19 @@ import puppeteer = require('puppeteer');
 let contentHTML = '';
 export interface generatePDFOptions {
   initialDocURLs: Array<string>;
-  excludeURLs: Array<string>;
-  outputPDFFilename: string;
-  pdfMargin: puppeteer.PDFOptions['margin'];
+  excludeURLs?: Array<string>;
+  outputPDFFilename?: string;
+  pdfMargin?: puppeteer.PDFOptions['margin'];
   contentSelector: string;
   paginationSelector: string;
-  pdfFormat: puppeteer.PDFFormat;
-  excludeSelectors: Array<string>;
-  cssStyle: string;
-  puppeteerArgs: Array<string>;
-  coverTitle: string;
-  coverImage: string;
-  disableTOC: boolean;
-  coverSub: string;
+  pdfFormat?: puppeteer.PDFFormat;
+  excludeSelectors?: Array<string>;
+  cssStyle?: string;
+  puppeteerArgs?: Array<string>;
+  coverTitle?: string;
+  coverImage?: string;
+  disableTOC?: boolean;
+  coverSub?: string;
 }
 
 export async function generatePDF({
@@ -32,7 +32,7 @@ export async function generatePDF({
   puppeteerArgs,
   coverTitle,
   coverImage,
-  disableTOC,
+  disableTOC = false,
   coverSub,
 }: generatePDFOptions): Promise<Buffer> {
   const browser = await puppeteer.launch({ args: puppeteerArgs });

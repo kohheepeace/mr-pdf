@@ -4,8 +4,10 @@
     "lib": ["dom"],
     "rootDir": "src",
     "outDir": "lib",
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "declaration": true,
+    "declarationDir": "lib/types"
   },
-  "include": ["src/**/*", "types/api.d.ts"],
+  "include": ["src/**/*"],
   "exclude": ["node_modules", "lib"]
 }

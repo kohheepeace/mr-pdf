@@ -1,6 +1,6 @@
 import { generatePDF, generatePDFOptions } from './utils';
 
-export const mrpdf = async (options: generatePDFOptions) => {
+export default async function (options: generatePDFOptions) {
   const required = ['initialDocURLs', 'contentSelector', 'paginationSelector'];
   console.log(options?.initialDocURLs);
   let missing: string[] = [];
@@ -17,6 +17,4 @@ export const mrpdf = async (options: generatePDFOptions) => {
   }
 
   return await generatePDF(options);
-};
-
-export default mrpdf;
+}

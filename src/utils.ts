@@ -12,7 +12,7 @@ export interface generatePDFOptions {
   pdfFormat?: puppeteer.PDFFormat;
   excludeSelectors?: Array<string>;
   cssStyle?: string;
-  puppeteerArgs?: Array<string>;
+  puppeteerArgs?: puppeteer.LaunchOptions;
   coverTitle?: string;
   coverImage?: string;
   disableTOC?: boolean;
@@ -35,7 +35,7 @@ export async function generatePDF({
   disableTOC = false,
   coverSub,
 }: generatePDFOptions): Promise<Buffer> {
-  const browser = await puppeteer.launch({ args: puppeteerArgs });
+  const browser = await puppeteer.launch(puppeteerArgs);
   const page = await browser.newPage();
 
   for (const url of initialDocURLs) {

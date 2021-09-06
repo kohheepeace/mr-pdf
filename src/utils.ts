@@ -17,6 +17,7 @@ export interface generatePDFOptions {
   coverImage: string;
   disableTOC: boolean;
   coverSub: string;
+  waitForRender: number;
 }
 
 export async function generatePDF({
@@ -34,6 +35,7 @@ export async function generatePDF({
   coverImage,
   disableTOC,
   coverSub,
+  waitForRender,
 }: generatePDFOptions): Promise<void> {
   const browser = await puppeteer.launch({ args: puppeteerArgs });
   const page = await browser.newPage();
@@ -167,6 +169,11 @@ export async function generatePDF({
   // Add CSS to HTML
   if (cssStyle) {
     await page.addStyleTag({ content: cssStyle });
+  }
+
+  if (waitForRender) {
+    console.log('Rendering...');
+    await new Promise((r) => setTimeout(r, waitForRender));
   }
 
   await page.pdf({

@@ -49,11 +49,18 @@ export async function generatePDF({
       console.log(chalk.cyan(`Retrieving html from ${nextPageURL}`));
       console.log();
 
-      // Go to the page specified by nextPageURL
-      await page.goto(`${nextPageURL}`, {
-        waitUntil: 'networkidle0',
-        timeout: 0,
-      });
+      if (waitForRender) {
+        await page.goto(`${nextPageURL}`);
+        console.log(chalk.green('Rendering...'));
+        await page.waitFor(waitForRender);
+      } else {
+        // Go to the page specified by nextPageURL
+        await page.goto(`${nextPageURL}`, {
+          waitUntil: 'networkidle0',
+          timeout: 0,
+        });
+      }
+
       // Get the HTML string of the content section.
       const html = await page.evaluate(
         ({ contentSelector }) => {
@@ -169,11 +176,6 @@ export async function generatePDF({
   // Add CSS to HTML
   if (cssStyle) {
     await page.addStyleTag({ content: cssStyle });
-  }
-
-  if (waitForRender) {
-    console.log('Rendering...');
-    await new Promise((r) => setTimeout(r, waitForRender));
   }
 
   await page.pdf({

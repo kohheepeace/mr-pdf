@@ -39,8 +39,7 @@ https://docusaurus.io/en/
 
 `initialDocsURL`: https://docusaurus.io/docs/en/installation
 
-`demoPDF`: https://drive.google.com/file/d/1HK5tBKmK0JBsFMNwoYRB9fDs9rkJhGRC/view?usp=sharing
-
+`demoPDF`: https://github.com/kohheepeace/mr-pdf/blob/master/v1-docusaurus.pdf
 
 `command`:
 ```shell
@@ -55,8 +54,7 @@ https://docusaurus.io/
 
 `initialDocURLs`: https://docusaurus.io/docs
 
-`demoPDF`:
-https://drive.google.com/file/d/12IXlbRGKxDwUKK_GDy0hyBwcHUUell8D/view?usp=sharing
+`demoPDF`: https://github.com/kohheepeace/mr-pdf/blob/master/v2-docusaurus.pdf
 
 
 `command`:
@@ -71,8 +69,7 @@ https://vuepress.vuejs.org/
 
 https://vuepress.vuejs.org/guide/
 
-`demoPDF`: https://drive.google.com/file/d/1v4EhFARPHPfYZWgx2mJsr5Y0op3LyV6u/view?usp=sharing
-
+`demoPDF`: https://github.com/kohheepeace/mr-pdf/blob/master/vuepress.pdf
 `command`:
 ```shell
 npx mr-pdf --initialDocsURL="https://vuepress.vuejs.org/guide/" --paginationSelector=".page-nav .next a" --excludeSelectors="header.navbar,aside.sidebar,footer.page-edit .edit-link,.global-ui,.page-nav"
@@ -83,7 +80,7 @@ https://www.mkdocs.org/
 
 `initialDocsURL`: https://www.mkdocs.org/
 
-`demoPDF`: https://drive.google.com/file/d/1xVVDLmBzPQIbRs9V7Upq2S2QIjysS2-j/view?usp=sharing
+`demoPDF`: https://github.com/kohheepeace/mr-pdf/blob/master/mkdocs.pdf
 
 `command`: 
 ```shell
@@ -96,8 +93,7 @@ https://squidfunk.github.io/mkdocs-material/
 
 `initialDocsURL`: https://squidfunk.github.io/mkdocs-material/getting-started/
 
-`demoPDF`: https://drive.google.com/file/d/1oB5fyHIyZ83CUFO9d4VD4q4cJFgGlK-6/view?usp=sharing
-
+`demoPDF`: https://github.com/kohheepeace/mr-pdf/blob/master/material-for-mkdocs.pdf
 `command`: 
 ```shell
 npx mr-pdf --initialDocsURL="https://squidfunk.github.io/mkdocs-material/getting-started/" --paginationSelector="a.md-footer-nav__link--next" --excludeSelectors="header.md-header,.announce,nav.md-tabs,.md-main__inner .md-sidebar--primary,.md-main__inner .md-sidebar--secondary,footer" --cssStyle=".md-content {max-width: 100%!important;}"

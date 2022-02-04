@@ -17,6 +17,7 @@ export interface generatePDFOptions {
   coverImage: string;
   disableTOC: boolean;
   coverSub: string;
+  waitForRender: number;
 }
 
 export async function generatePDF({
@@ -34,6 +35,7 @@ export async function generatePDF({
   coverImage,
   disableTOC,
   coverSub,
+  waitForRender,
 }: generatePDFOptions): Promise<void> {
   const browser = await puppeteer.launch({ args: puppeteerArgs });
   const page = await browser.newPage();
@@ -47,11 +49,18 @@ export async function generatePDF({
       console.log(chalk.cyan(`Retrieving html from ${nextPageURL}`));
       console.log();
 
-      // Go to the page specified by nextPageURL
-      await page.goto(`${nextPageURL}`, {
-        waitUntil: 'networkidle0',
-        timeout: 0,
-      });
+      if (waitForRender) {
+        await page.goto(`${nextPageURL}`);
+        console.log(chalk.green('Rendering...'));
+        await page.waitFor(waitForRender);
+      } else {
+        // Go to the page specified by nextPageURL
+        await page.goto(`${nextPageURL}`, {
+          waitUntil: 'networkidle0',
+          timeout: 0,
+        });
+      }
+
       // Get the HTML string of the content section.
       const html = await page.evaluate(
         ({ contentSelector }) => {

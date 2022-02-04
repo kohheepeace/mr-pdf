@@ -46,6 +46,7 @@ program
   .option('--coverImage <src>', 'image for PDF cover. *.svg file not working!')
   .option('--disableTOC', 'disable table of contents')
   .option('--coverSub <subtitle>', 'subtitle for PDF cover')
+  .option('--waitForRender <timeout>', 'wait for document render')
   .action((options: generatePDFOptions) => {
     generatePDF(options)
       .then(() => {

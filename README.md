@@ -1,11 +1,17 @@
+## ⚠️ Caution!
+Currently, this package is not catching up with docusaurus v2 and not actively developed, it is under MIT license, so feel free to fork and modify it.
+
 ## 📌 Introduction
 
 This is a PDF generator from document website such as `docusaurus`, `vuepress`, `mkdocs`.
 
+
 ## ⚡ Usage
 
+For [docusaurus v1](https://v1.docusaurus.io/docs/en/installation)
+
 ```shell
-npx mr-pdf --initialDocURLs="https://docusaurus.io/docs" --paginationSelector="li > a" --contentSelector="article"
+npx mr-pdf --initialDocURLs="https://v1.docusaurus.io/docs/en/installation" --paginationSelector=".docs-prevnext > a.docs-next" --excludeSelectors=".fixedHeaderContainer,footer.nav-footer,#docsNav,nav.onPageNav,a.edit-page-link,div.docs-prevnext" --cssStyle=".navPusher {padding-top: 0;}" --contentSelector="article"
 ```
 
 ## 🍗 CLI Options
@@ -103,9 +109,9 @@ npx mr-pdf --initialDocURLs="https://squidfunk.github.io/mkdocs-material/getting
 
 #### PR to add new docs is welcome here... 😸
 
-## 📄 How this plugin works
-
-This plugin uses [puppeteer](https://github.com/puppeteer/puppeteer) to make PDF of the document website.
+## 📄 How `mr-pdf` works
+1. [puppter](https://pptr.dev/) can make html to PDF like you can print HTML page in chrome browser
+2. so, the idea of mr-pdf is **generating one big HTML through looping page link, then run `page.pdf()`** from puppter
 
 ![mr-pdf-diagram](https://user-images.githubusercontent.com/29557494/90359040-c8fb9780-e092-11ea-89c7-1868bc32919f.png)
 

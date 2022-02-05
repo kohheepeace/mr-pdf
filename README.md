@@ -1,5 +1,5 @@
 ## ⚠️ Caution!
-Currently, this package is not catching up with docusaurus v2 and not actively developed, it is under MIT license, so feel free to fork and modify it.
+Currently, this package is not catching up with docusaurus v2 HTML markup so command cannnot find correct HTML to loop throught docs. Please modify the command to find correct HTML markup by yourself.
 
 ## 📌 Introduction
 

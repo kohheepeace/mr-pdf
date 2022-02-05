@@ -1,5 +1,5 @@
 ## ⚠️ Caution!
-Currently, this package is not catching up with docusaurus v2 HTML markup so command cannnot find correct HTML to loop throught docs. Please modify the command to find correct HTML markup by yourself.
+Currently, this package is not catching up with docusaurus v2 HTML markup, so command may not find the correct HTML to loop through docs. Please modify the command to find correct HTML markup by yourself.
 
 ## 📌 Introduction
 

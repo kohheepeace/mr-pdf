@@ -111,7 +111,7 @@ npx mr-pdf --initialDocURLs="https://squidfunk.github.io/mkdocs-material/getting
 
 ## 📄 How `mr-pdf` works
 1. [puppter](https://pptr.dev/) can make html to PDF like you can print HTML page in chrome browser
-2. so, the idea of mr-pdf is **generating one big HTML through looping page link, then run `page.pdf()`** from puppter
+2. so, the idea of mr-pdf is **generating one big HTML through looping page link, then run [`page.pdf()`](https://github.com/puppeteer/puppeteer/blob/v13.1.3/docs/api.md#pagepdfoptions)** from puppter to generate PDF.
 
 ![mr-pdf-diagram](https://user-images.githubusercontent.com/29557494/90359040-c8fb9780-e092-11ea-89c7-1868bc32919f.png)
 

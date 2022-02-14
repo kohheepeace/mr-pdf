@@ -65,7 +65,7 @@ npx mr-pdf --initialDocURLs="https://docusaurus.io/docs/en/installation" --pagin
 npx mr-pdf --initialDocURLs="https://docusaurus.io/docs/" --contentSelector="article" --paginationSelector=".pagination-nav__item--next > a" --excludeSelectors=".margin-vert--xl a" --coverImage="https://docusaurus.io/img/docusaurus.png" --coverTitle="Docusaurus v2"
 ```
 
-### Vuepress
+### Vuepress v1
 
 <https://vuepress.vuejs.org/>
 
@@ -73,11 +73,26 @@ npx mr-pdf --initialDocURLs="https://docusaurus.io/docs/" --contentSelector="art
 
 <https://vuepress.vuejs.org/guide/>
 
-`demoPDF`: <https://github.com/kohheepeace/mr-pdf/blob/master/vuepress.pdf>
+`demoPDF`: <https://github.com/kohheepeace/mr-pdf/blob/master/v1-vuepress.pdf>
 `command`:
 
 ```shell
-npx mr-pdf --initialDocURLs="https://vuepress.vuejs.org/guide/" --paginationSelector=".page-nav .next a" --excludeSelectors="header.navbar,aside.sidebar,footer.page-edit .edit-link,.global-ui,.page-nav"
+npx mr-pdf --initialDocURLs="https://vuepress.vuejs.org/guide/" --contentSelector="main" --paginationSelector=".page-nav .next a" --excludeSelectors="header.navbar,aside.sidebar,footer.page-edit .edit-link,.global-ui,.page-nav" --coverImage="https://vuepress.vuejs.org/hero.png" --coverTitle="VuePress" --coverSub="Vue-powered Static Site Generator"
+```
+
+### Vuepress v2 beta
+
+<https://v2.vuepress.vuejs.org/>
+
+`initialDocURLs`:
+
+<https://v2.vuepress.vuejs.org/guide/>
+
+`demoPDF`: <https://github.com/kohheepeace/mr-pdf/blob/master/v2-vuepress.pdf>
+`command`:
+
+```shell
+npx mr-pdf --initialDocURLs="https://v2.vuepress.vuejs.org/guide/" --contentSelector="main" --paginationSelector=".page-nav .next a" --excludeSelectors="header.navbar,aside.sidebar,footer.page-edit .edit-link,.global-ui,.page-nav" --coverImage="https://v2.vuepress.vuejs.org/images/hero.png" --coverTitle="VuePress" --coverSub="Vue-powered Static Site Generator"
 ```
 
 ### Mkdocs

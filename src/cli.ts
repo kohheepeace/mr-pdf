@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-import chalk = require('chalk');
-import program = require('commander');
+import chalk from 'chalk';
+import program from 'commander';
 
 import { generatePDF, generatePDFOptions } from './utils';
 import {
@@ -46,7 +46,9 @@ program
   .option('--coverImage <src>', 'image for PDF cover. *.svg file not working!')
   .option('--disableTOC', 'disable table of contents')
   .option('--coverSub <subtitle>', 'subtitle for PDF cover')
-  .option('--waitForRender <timeout>', 'wait for document render')
+  .option(
+    '--waitForRender <timeout>',
+    'wait for document render in milliseconds')
   .option('--headerTemplate <html>', 'html template for page header')
   .option('--footerTemplate <html>', 'html template for page footer')
   .action((options: generatePDFOptions) => {
@@ -55,7 +57,7 @@ program
         console.log(chalk.green('Finish generating PDF!'));
         process.exit(0);
       })
-      .catch((err: { stack: any }) => {
+      .catch((err: { stack: unknown }) => {
         console.error(chalk.red(err.stack));
         process.exit(1);
       });

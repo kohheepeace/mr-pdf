@@ -41,7 +41,8 @@ program
     'set margin around PDF file',
     generatePuppeteerPDFMargin,
   )
-  .option('--pdfFormat <format>', 'pdf format ex: A3, A4...')
+  .option('--pdfFormat <format>', '(DEPRECATED use paperFormat)') //TODO: Remove at next major version, replaced by paperFormat
+  .option('--paperFormat <format>', 'pdf format ex: A3, A4...')
   .option('--coverTitle <title>', 'title for PDF cover')
   .option('--coverImage <src>', 'image for PDF cover. *.svg file not working!')
   .option('--disableTOC', 'disable table of contents')
@@ -52,6 +53,10 @@ program
   .option('--headerTemplate <html>', 'html template for page header')
   .option('--footerTemplate <html>', 'html template for page footer')
   .action((options: generatePDFOptions) => {
+    if (options.pdfFormat) {
+      console.log(chalk.red('--pdfFormat is deprecated, use --paperFormat'));
+      process.exit(1);
+    }
     generatePDF(options)
       .then(() => {
         console.log(chalk.green('Finish generating PDF!'));

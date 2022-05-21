@@ -47,6 +47,8 @@ program
   .option('--disableTOC', 'disable table of contents')
   .option('--coverSub <subtitle>', 'subtitle for PDF cover')
   .option('--waitForRender <timeout>', 'wait for document render')
+  .option('--headerTemplate <html>', 'html template for page header')
+  .option('--footerTemplate <html>', 'html template for page footer')
   .action((options: generatePDFOptions) => {
     generatePDF(options)
       .then(() => {

@@ -1,5 +1,6 @@
 import chalk = require('chalk');
 import puppeteer = require('puppeteer');
+import { scrollPageToBottom } from 'puppeteer-autoscroll-down';
 
 let contentHTML = '';
 export interface generatePDFOptions {
@@ -177,6 +178,10 @@ export async function generatePDF({
   if (cssStyle) {
     await page.addStyleTag({ content: cssStyle });
   }
+
+  // Scroll to the bottom of the page with puppeteer-autoscroll-down
+  // This forces lazy-loading images to load
+  await scrollPageToBottom(page, {});
 
   await page.pdf({
     path: outputPDFFilename,

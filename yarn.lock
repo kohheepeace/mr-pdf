@@ -1208,6 +1208,11 @@ punycode@^2.1.0:
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.1.1.tgz#b58b010ac40c22c5657616c8d2c2c02c7bf479ec"
   integrity sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==
 
+puppeteer-autoscroll-down@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/puppeteer-autoscroll-down/-/puppeteer-autoscroll-down-1.1.1.tgz#895062605143893c74117f69eefa63a237795c90"
+  integrity sha512-NT0/bO4QBCwMPUhTcTItGojP3W9SNQL/VaW57x8bC3HTraQ2qjicZzf0c4ysNvOHwZf/NMMZxscuTymXZ18sGA==
+
 puppeteer@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/puppeteer/-/puppeteer-2.1.1.tgz#ccde47c2a688f131883b50f2d697bd25189da27e"

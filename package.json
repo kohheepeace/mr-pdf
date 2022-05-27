@@ -43,6 +43,7 @@
     "husky": "^4.2.5",
     "lint-staged": "^10.2.11",
     "prettier": "2.0.5",
+    "puppeteer-autoscroll-down": "^1.1.1",
     "typescript": "^3.8.3"
   },
   "files": [

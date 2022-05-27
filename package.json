@@ -29,7 +29,8 @@
   "dependencies": {
     "chalk": "^3.0.0",
     "commander": "^4.1.1",
-    "puppeteer": "^2.1.1"
+    "puppeteer": "^2.1.1",
+    "puppeteer-autoscroll-down": "^1.1.1"
   },
   "devDependencies": {
     "@tsconfig/node14": "^1.0.0",
@@ -43,7 +44,6 @@
     "husky": "^4.2.5",
     "lint-staged": "^10.2.11",
     "prettier": "2.0.5",
-    "puppeteer-autoscroll-down": "^1.1.1",
     "typescript": "^3.8.3"
   },
   "files": [

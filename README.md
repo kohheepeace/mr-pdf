@@ -31,7 +31,9 @@ npx mr-pdf --initialDocURLs="https://v1.docusaurus.io/docs/en/installation" --pa
 | `--coverTitle`         | No       | Title for the PDF cover.                                                                                                                                                           |
 | `--coverImage`         | No       | `<src>` Image for PDF cover (does not support SVG)                                                                                                                                 |
 | `--coverSub`           | No       | Subtitle the for PDF cover. Add `<br/>` tags for multiple lines.                                                                                                                   |
-|                        |
+| `--headerTemplate`     | No       | HTML template for the print header. Please check this link for details of injecting values [Puppeteer document](https://pptr.dev/#?product=Puppeteer&show=api-pagepdfoptions)      |
+| `--footerTemplate`     | No       | HTML template for the print footer. Please check this link for details of injecting values [Puppeteer document](https://pptr.dev/#?product=Puppeteer&show=api-pagepdfoptions)      |
+|                        |          |                                                                                                                                                                                    |
 
 ## 🎨 Examples and Demo PDF
 

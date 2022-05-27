@@ -18,6 +18,8 @@ export interface generatePDFOptions {
   disableTOC: boolean;
   coverSub: string;
   waitForRender: number;
+  headerTemplate: string;
+  footerTemplate: string;
 }
 
 export async function generatePDF({
@@ -36,6 +38,8 @@ export async function generatePDF({
   disableTOC,
   coverSub,
   waitForRender,
+  headerTemplate,
+  footerTemplate,
 }: generatePDFOptions): Promise<void> {
   const browser = await puppeteer.launch({ args: puppeteerArgs });
   const page = await browser.newPage();
@@ -183,6 +187,9 @@ export async function generatePDF({
     format: pdfFormat,
     printBackground: true,
     margin: pdfMargin,
+    displayHeaderFooter: !!(headerTemplate || footerTemplate),
+    headerTemplate,
+    footerTemplate,
   });
 }
 

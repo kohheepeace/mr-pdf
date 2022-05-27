@@ -1,5 +1,5 @@
 ## ⚠️ Caution!
-Currently, this package is not catching up with docusaurus v2 HTML markup, so command may not find the correct HTML to loop through docs. Please modify the command to find correct HTML markup by yourself.
+Currently, this package is not catching up with docusaurus v2 HTML markup (Last Update: Beta 20), so command may not find the correct HTML to loop through docs. Please modify the command to find correct HTML markup by yourself.
 
 ## 📌 Introduction
 
@@ -51,7 +51,7 @@ npx mr-pdf --initialDocURLs="https://v1.docusaurus.io/docs/en/installation" --pa
 npx mr-pdf --initialDocURLs="https://docusaurus.io/docs/en/installation" --paginationSelector=".docs-prevnext > a.docs-next" --excludeSelectors=".fixedHeaderContainer,footer.nav-footer,#docsNav,nav.onPageNav,a.edit-page-link,div.docs-prevnext" --cssStyle=".navPusher {padding-top: 0;}" --pdfMargin="20"
 ```
 
-### Docusaurus v2 beta
+### Docusaurus v2 beta 20
 
 ![20210603060438](https://user-images.githubusercontent.com/29557494/120552058-b4299e00-c431-11eb-833e-1ac1338b0a70.gif)
 
@@ -64,7 +64,7 @@ npx mr-pdf --initialDocURLs="https://docusaurus.io/docs/en/installation" --pagin
 `command`:
 
 ```shell
-npx mr-pdf --initialDocURLs="https://docusaurus.io/docs/" --contentSelector="article" --paginationSelector=".pagination-nav__item--next > a" --excludeSelectors=".margin-vert--xl a" --coverImage="https://docusaurus.io/img/docusaurus.png" --coverTitle="Docusaurus v2"
+npx mr-pdf --initialDocURLs="https://docusaurus.io/docs/" --contentSelector="article" --paginationSelector="a.pagination-nav__link--next" --excludeSelectors=".theme-doc-breadcrumbs,a.theme-edit-this-page" --coverImage="https://docusaurus.io/img/docusaurus.png" --coverTitle="Docusaurus v2"
 ```
 
 ### Vuepress v1

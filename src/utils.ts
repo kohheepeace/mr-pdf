@@ -173,8 +173,10 @@ export async function generatePDF({
       // "selector" is equal to "excludeSelector"
       // https://pptr.dev/#?product=Puppeteer&version=v5.2.1&show=api-pageevaluatepagefunction-args
       await page.evaluate((selector) => {
-        const matches = document.querySelectorAll(selector);
-        matches.forEach((match) => match.remove());
+        if (selector != '') {
+          const matches = document.querySelectorAll(selector);
+          matches.forEach((match) => match.remove());
+        }
       }, excludeSelector);
     });
 

@@ -57,7 +57,11 @@ export async function generatePDF({
       if (waitForRender) {
         await page.goto(`${nextPageURL}`);
         console.log(chalk.green('Rendering...'));
-        await page.waitFor(waitForRender);
+        if (!Number.isNaN(waitForRender)) {
+          await page.waitFor(Number.parseInt('' + waitForRender));
+        } else {
+          await page.waitFor(waitForRender);
+        }
       } else {
         // Go to the page specified by nextPageURL
         await page.goto(`${nextPageURL}`, {

@@ -233,7 +233,7 @@ function generateToc(contentHtml: string) {
 
     const modifiedContentHTML = matchedStr.replace(/<h[1-3].*?>/g, (header) => {
       if (header.match(/id( )*=( )*"/g)) {
-        return header.replace(/id( )*=( )*"/g, `id="${headerId} `);
+        return header.replace(/id( )*=( )*"/g, `id="${headerId}"`);
       } else {
         return header.substring(0, header.length - 1) + ` id="${headerId}">`;
       }

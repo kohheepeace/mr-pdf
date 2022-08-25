@@ -1,6 +1,7 @@
+import { AddressInfo } from 'net';
+import { scrollPageToBottom } from 'puppeteer-autoscroll-down';
 import chalk = require('chalk');
 import puppeteer = require('puppeteer');
-import { scrollPageToBottom } from 'puppeteer-autoscroll-down';
 
 let contentHTML = '';
 export interface generatePDFOptions {
@@ -21,6 +22,8 @@ export interface generatePDFOptions {
   waitForRender: number;
   headerTemplate: string;
   footerTemplate: string;
+  buildDirPath: string;
+  firstDocPath: string;
 }
 
 export async function generatePDF({
@@ -260,3 +263,23 @@ function generateToc(contentHtml: string) {
 
   return { modifiedContentHTML, tocHTML };
 }
+
+function hasOwnProperty<
+  X extends Record<PropertyKey, unknown> & any,
+  Y extends PropertyKey
+>(obj: X, prop: Y): obj is X & Record<Y, unknown> {
+  return Object.prototype.hasOwnProperty.call(obj, prop);
+}
+
+export const isAddressInfo = (arg: unknown): arg is AddressInfo => {
+  return (
+    arg !== null &&
+    typeof arg === 'object' &&
+    hasOwnProperty(arg, 'address') &&
+    typeof arg.address == 'string' &&
+    hasOwnProperty(arg, 'family') &&
+    typeof arg.family == 'string' &&
+    hasOwnProperty(arg, 'port') &&
+    typeof arg.port == 'number'
+  );
+};

@@ -1,14 +1,13 @@
 #!/usr/bin/env node
 
+import { generatePDF, generatePDFOptions, isAddressInfo } from './utils';
 import chalk = require('chalk');
 import program = require('commander');
-
-import { generatePDF, generatePDFOptions } from './utils';
+import express = require('express');
 import {
   commaSeparatedList,
   generatePuppeteerPDFMargin,
 } from './commander-options';
-
 program
   .name('mr-pdf')
   .requiredOption(
@@ -49,16 +48,50 @@ program
   .option('--waitForRender <timeout>', 'wait for document render')
   .option('--headerTemplate <html>', 'html template for page header')
   .option('--footerTemplate <html>', 'html template for page footer')
-  .action((options: generatePDFOptions) => {
-    generatePDF(options)
-      .then(() => {
-        console.log(chalk.green('Finish generating PDF!'));
-        process.exit(0);
-      })
-      .catch((err: { stack: any }) => {
-        console.error(chalk.red(err.stack));
-        process.exit(1);
-      });
+  .option('--buildDirPath <path>', 'location of build directory')
+  .option('--firstDocPath <path>', 'location of first doc path')
+  .action(async (options: generatePDFOptions) => {
+    const app = express();
+    const httpServer = await app.listen();
+    const address = httpServer.address();
+    if (!address || !isAddressInfo(address)) {
+      httpServer.close();
+      throw new Error(
+        'Something went wrong spinning up the express webserver.',
+      );
+    }
+    app.use('/', express.static(options.buildDirPath));
+
+    if (options.buildDirPath) {
+      try {
+        generatePDF({
+          ...options,
+          initialDocURLs: [
+            `http://127.0.0.1:${address.port}/${options.firstDocPath}`,
+          ],
+        })
+          .then(() => {
+            console.log(chalk.green('Finish generating PDF!'));
+            process.exit(0);
+          })
+          .catch((err: { stack: any }) => {
+            console.error(chalk.red(err.stack));
+            process.exit(1);
+          });
+      } catch (err) {
+        httpServer.close();
+      }
+    } else {
+      generatePDF(options)
+        .then(() => {
+          console.log(chalk.green('Finish generating PDF!'));
+          process.exit(0);
+        })
+        .catch((err: { stack: any }) => {
+          console.error(chalk.red(err.stack));
+          process.exit(1);
+        });
+    }
   });
 
 program.parse(process.argv);

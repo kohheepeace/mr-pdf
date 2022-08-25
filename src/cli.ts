@@ -10,7 +10,7 @@ import {
 } from './commander-options';
 program
   .name('mr-pdf')
-  .requiredOption(
+  .option(
     '--initialDocURLs <urls>',
     'set urls to start generating PDF from',
     commaSeparatedList,

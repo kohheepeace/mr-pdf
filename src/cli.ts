@@ -60,9 +60,9 @@ program
         'Something went wrong spinning up the express webserver.',
       );
     }
-    app.use('/', express.static(options.buildDirPath));
 
     if (options.buildDirPath) {
+      app.use('/', express.static(options.buildDirPath));
       try {
         generatePDF({
           ...options,

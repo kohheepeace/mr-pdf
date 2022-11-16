@@ -49,6 +49,7 @@ program
   .option('--waitForRender <timeout>', 'wait for document render')
   .option('--headerTemplate <html>', 'html template for page header')
   .option('--footerTemplate <html>', 'html template for page footer')
+  .option('--puppeteerArgs <args>', 'puppeteer launch args', commander_options_1.commaSeparatedList)
   .action((options: generatePDFOptions) => {
     generatePDF(options)
       .then(() => {

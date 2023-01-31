@@ -1,6 +1,7 @@
-import chalk = require('chalk');
-import puppeteer = require('puppeteer');
+import chalk from 'chalk';
+import puppeteer from 'puppeteer';
 import { scrollPageToBottom } from 'puppeteer-autoscroll-down';
+import { Page } from 'puppeteer-core';
 
 let contentHTML = '';
 export interface generatePDFOptions {
@@ -10,7 +11,9 @@ export interface generatePDFOptions {
   pdfMargin: puppeteer.PDFOptions['margin'];
   contentSelector: string;
   paginationSelector: string;
-  pdfFormat: puppeteer.PDFFormat;
+  // deprecated - user paperFormat
+  pdfFormat?: puppeteer.PaperFormat;
+  paperFormat: puppeteer.PaperFormat;
   excludeSelectors: Array<string>;
   cssStyle: string;
   puppeteerArgs: Array<string>;
@@ -30,7 +33,7 @@ export async function generatePDF({
   pdfMargin = { top: 32, right: 32, bottom: 32, left: 32 },
   contentSelector,
   paginationSelector,
-  pdfFormat,
+  paperFormat,
   excludeSelectors,
   cssStyle,
   puppeteerArgs,
@@ -54,24 +57,21 @@ export async function generatePDF({
       console.log(chalk.cyan(`Retrieving html from ${nextPageURL}`));
       console.log();
 
+      // Go to the page specified by nextPageURL
+      await page.goto(`${nextPageURL}`, {
+        waitUntil: 'networkidle0',
+        timeout: 0,
+      });
       if (waitForRender) {
-        await page.goto(`${nextPageURL}`);
-        console.log(chalk.green('Rendering...'));
-        await page.waitFor(waitForRender);
-      } else {
-        // Go to the page specified by nextPageURL
-        await page.goto(`${nextPageURL}`, {
-          waitUntil: 'networkidle0',
-          timeout: 0,
-        });
+        console.log(chalk.green('Waiting for render...'));
+        await page.waitForTimeout(waitForRender);
       }
 
       // Get the HTML string of the content section.
       const html = await page.evaluate(
         ({ contentSelector }) => {
-          const element: HTMLElement | null = document.querySelector(
-            contentSelector,
-          );
+          const element: HTMLElement | null =
+            document.querySelector(contentSelector);
           if (element) {
             // Add pageBreak for PDF
             element.style.pageBreakAfter = 'always';
@@ -112,10 +112,18 @@ export async function generatePDF({
 
   // Download buffer of coverImage if exists
   let imgBase64 = '';
+  let coverImageHtml = '';
   if (coverImage) {
     const imgSrc = await page.goto(coverImage);
     const imgSrcBuffer = await imgSrc?.buffer();
     imgBase64 = imgSrcBuffer?.toString('base64') || '';
+    coverImageHtml = `<img
+    class="cover-img"
+    src="data:image/png;base64, ${imgBase64}"
+    alt=""
+    width="140"
+    height="140"
+  />`;
   }
 
   // Go to initial page
@@ -136,13 +144,7 @@ export async function generatePDF({
   >
     ${coverTitle ? `<h1>${coverTitle}</h1>` : ''}
     ${coverSub ? `<h3>${coverSub}</h3>` : ''}
-    <img
-      class="cover-img"
-      src="data:image/png;base64, ${imgBase64}"
-      alt=""
-      width="140"
-      height="140"
-    />
+    ${coverImageHtml}
   </div>`;
 
   // Add Toc
@@ -185,11 +187,12 @@ export async function generatePDF({
 
   // Scroll to the bottom of the page with puppeteer-autoscroll-down
   // This forces lazy-loading images to load
-  await scrollPageToBottom(page, {});
+  const pageTypeHack = page as unknown; //see issue regarding types between puppeteer and puppeteer-core https://github.com/puppeteer/puppeteer/issues/6904
+  await scrollPageToBottom(pageTypeHack as Page, {}); //cast to puppeteer-core type
 
   await page.pdf({
     path: outputPDFFilename,
-    format: pdfFormat,
+    format: paperFormat,
     printBackground: true,
     margin: pdfMargin,
     displayHeaderFooter: !!(headerTemplate || footerTemplate),

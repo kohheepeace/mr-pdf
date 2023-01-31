@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import chalk from 'chalk';
-import program from 'commander';
+import { program } from 'commander';
 
 import { generatePDF, generatePDFOptions } from './utils';
 import {
@@ -49,7 +49,8 @@ program
   .option('--coverSub <subtitle>', 'subtitle for PDF cover')
   .option(
     '--waitForRender <timeout>',
-    'wait for document render in milliseconds')
+    'wait for document render in milliseconds',
+  )
   .option('--headerTemplate <html>', 'html template for page header')
   .option('--footerTemplate <html>', 'html template for page footer')
   .action((options: generatePDFOptions) => {

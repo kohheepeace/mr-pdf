@@ -7,7 +7,7 @@ export function commaSeparatedList(value: string): Array<string> {
 export function generatePuppeteerPDFMargin(
   value: string,
 ): puppeteer.PDFOptions['margin'] {
-  const marginStrings = value.split(',');
+  const marginStrings = commaSeparatedList(value);
 
   const marginTop = marginStrings[0];
   const marginRight = marginStrings[1];

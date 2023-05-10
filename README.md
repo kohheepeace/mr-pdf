@@ -1,4 +1,5 @@
 ## ⚠️ Caution!
+
 Currently, this package is not catching up with docusaurus v2 HTML markup, so command may not find the correct HTML to loop through docs. Please modify the command to find correct HTML markup by yourself.
 
 ## 📌 Introduction
@@ -127,6 +128,7 @@ npx mr-pdf --initialDocURLs="https://squidfunk.github.io/mkdocs-material/getting
 #### PR to add new docs is welcome here... 😸
 
 ## 📄 How `mr-pdf` works
+
 1. [puppter](https://pptr.dev/) can make html to PDF like you can print HTML page in chrome browser
 2. so, the idea of mr-pdf is **generating one big HTML through looping page link, then run [`page.pdf()`](https://github.com/puppeteer/puppeteer/blob/v13.1.3/docs/api.md#pagepdfoptions)** from puppter to generate PDF.
 
@@ -134,8 +136,8 @@ npx mr-pdf --initialDocURLs="https://squidfunk.github.io/mkdocs-material/getting
 
 ## 🎉 Thanks
 
-This repo's code is coming from <https://github.com/KohheePeace/docusaurus-pdf>.
+This repo's code is coming from <https://github.com/KohheePeace/mr-pdf>.
 
-Thanks for awesome code made by [@maxarndt](https://github.com/maxarndt) and [@aloisklink](https://github.com/aloisklink).
+Thanks for awesome code made by [@KohheePeace](https://github.com/KohheePeace/), [@maxarndt](https://github.com/maxarndt) and [@aloisklink](https://github.com/aloisklink).
 
 [@bojl](https://github.com/bojl) approach to make TOC was awesome and breakthrough.

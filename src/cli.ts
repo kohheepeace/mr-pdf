@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
-import chalk = require('chalk');
-import program = require('commander');
+import * as chalk from 'chalk';
+import { program } from 'commander';
 
-import { generatePDF, generatePDFOptions } from './utils';
+import { generatePDF, GeneratePDFOptions } from './utils';
 import {
   commaSeparatedList,
   generatePuppeteerPDFMargin,
@@ -41,22 +41,36 @@ program
     'set margin around PDF file',
     generatePuppeteerPDFMargin,
   )
-  .option('--pdfFormat <format>', 'pdf format ex: A3, A4...')
+  .option('--pdfFormat <format>', '(DEPRECATED use paperFormat)') //TODO: Remove at next major version, replaced by paperFormat
+  .option('--paperFormat <format>', 'pdf format ex: A3, A4...')
   .option('--coverTitle <title>', 'title for PDF cover')
   .option('--coverImage <src>', 'image for PDF cover. *.svg file not working!')
   .option('--disableTOC', 'disable table of contents')
   .option('--coverSub <subtitle>', 'subtitle for PDF cover')
-  .option('--waitForRender <timeout>', 'wait for document render')
+  .option(
+    '--waitForRender <timeout>',
+    'wait for document render in milliseconds',
+  )
   .option('--headerTemplate <html>', 'html template for page header')
   .option('--footerTemplate <html>', 'html template for page footer')
-  .action((options: generatePDFOptions) => {
+  .option(
+    '--puppeteerArgs <selectors>',
+    'add puppeteer arguments ex: --sandbox',
+    commaSeparatedList,
+  )
+
+  .action((options: GeneratePDFOptions) => {
+    if (options.pdfFormat) {
+      console.log(chalk.default.red('--pdfFormat is deprecated, use --paperFormat'));
+      process.exit(1);
+    }
     generatePDF(options)
       .then(() => {
-        console.log(chalk.green('Finish generating PDF!'));
+        console.log(chalk.default.green('Finish generating PDF!'));
         process.exit(0);
       })
-      .catch((err: { stack: any }) => {
-        console.error(chalk.red(err.stack));
+      .catch((err: { stack: unknown }) => {
+        console.error(chalk.default.red(err.stack));
         process.exit(1);
       });
   });

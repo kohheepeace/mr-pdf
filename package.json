@@ -1,7 +1,7 @@
 {
-  "name": "mr-pdf",
+  "name": "docusaurus-pdf",
   "version": "1.1.0",
-  "description": "Generate pdf from document",
+  "description": "Generate PDF from Docusaurus",
   "main": "lib/cli.js",
   "scripts": {
     "dev": "tsc --watch",
@@ -14,7 +14,7 @@
     "node": ">=18.0.0"
   },
   "bin": {
-    "mr-pdf": "lib/cli.js"
+    "docusaurus-pdf": "lib/cli.js"
   },
   "keywords": [
     "pdf",
@@ -23,8 +23,8 @@
     "mkdocs",
     "gitbook"
   ],
-  "homepage": "https://github.com/kohheepeace/mr-pdf",
-  "author": "Kohhee Peace <kohheepeace@gmail.com> (http://github.com/kohheePeace)",
+  "homepage": "https://github.com/jean-humann/docusaurus-pdf",
+  "author": "Jean Humann <jean.humann@gmail.com> (https://github.com/jean-humann)",
   "license": "MIT",
   "dependencies": {
     "puppeteer-autoscroll-down": "^1.1.2"

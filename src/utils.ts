@@ -29,7 +29,7 @@ export interface GeneratePDFOptions {
 export async function generatePDF({
   initialDocURLs,
   excludeURLs,
-  outputPDFFilename = 'mr-pdf.pdf',
+  outputPDFFilename = 'docusaurus-pdf.pdf',
   pdfMargin = { top: 32, right: 32, bottom: 32, left: 32 },
   contentSelector,
   paginationSelector,

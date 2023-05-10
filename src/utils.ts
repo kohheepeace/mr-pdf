@@ -47,7 +47,7 @@ export async function generatePDF({
 }: GeneratePDFOptions): Promise<void> {
   const browser = await puppeteer.launch({
     headless: 'new',
-    args: puppeteerArgs
+    args: puppeteerArgs,
   });
   const page = await browser.newPage();
 
@@ -224,8 +224,9 @@ function generateToc(contentHtml: string) {
       .replace(/<[^>]*>/g, '')
       .trim();
 
-    const headerId = `${Math.random().toString(36).substr(2, 5)}-${headers.length
-      }`;
+    const headerId = `${Math.random().toString(36).substr(2, 5)}-${
+      headers.length
+    }`;
 
     // level is h<level>
     const level = Number(matchedStr[matchedStr.indexOf('h') + 1]);
@@ -250,7 +251,8 @@ function generateToc(contentHtml: string) {
   const toc = headers
     .map(
       (header) =>
-        `<li class="toc-item toc-item-${header.level}" style="margin-left:${(header.level - 1) * 20
+        `<li class="toc-item toc-item-${header.level}" style="margin-left:${
+          (header.level - 1) * 20
         }px"><a href="#${header.id}">${header.header}</a></li>`,
     )
     .join('\n');

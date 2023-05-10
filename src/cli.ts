@@ -61,7 +61,9 @@ program
 
   .action((options: GeneratePDFOptions) => {
     if (options.pdfFormat) {
-      console.log(chalk.default.red('--pdfFormat is deprecated, use --paperFormat'));
+      console.log(
+        chalk.default.red('--pdfFormat is deprecated, use --paperFormat'),
+      );
       process.exit(1);
     }
     generatePDF(options)

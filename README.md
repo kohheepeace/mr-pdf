@@ -67,6 +67,20 @@ npx mr-pdf --initialDocURLs="https://docusaurus.io/docs/en/installation" --pagin
 npx mr-pdf --initialDocURLs="https://docusaurus.io/docs/" --contentSelector="article" --paginationSelector=".pagination-nav__item--next > a" --excludeSelectors=".margin-vert--xl a" --coverImage="https://docusaurus.io/img/docusaurus.png" --coverTitle="Docusaurus v2"
 ```
 
+### Docusaurus 2.4.1
+
+<https://docusaurus.io/>
+
+`initialDocURLs`: <https://docusaurus.io/docs>
+
+`demoPDF`: <https://github.com/kohheepeace/mr-pdf/blob/master/v241-docusaurus.pdf>
+
+`command`:
+
+```shell
+npx mr-pdf --initialDocURLs="https://docusaurus.io/docs" --contentSelector="article" --paginationSelector=".pagination-nav__link--next" --coverImage="https://docusaurus.io/img/docusaurus.png" --coverTitle="Docusaurus v2.4.1"
+```
+
 ### Vuepress v1
 
 <https://vuepress.vuejs.org/>

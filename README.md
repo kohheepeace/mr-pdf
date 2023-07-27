@@ -51,23 +51,9 @@ npx mr-pdf --initialDocURLs="https://v1.docusaurus.io/docs/en/installation" --pa
 npx mr-pdf --initialDocURLs="https://docusaurus.io/docs/en/installation" --paginationSelector=".docs-prevnext > a.docs-next" --excludeSelectors=".fixedHeaderContainer,footer.nav-footer,#docsNav,nav.onPageNav,a.edit-page-link,div.docs-prevnext" --cssStyle=".navPusher {padding-top: 0;}" --pdfMargin="20"
 ```
 
-### Docusaurus v2 beta
+### Docusaurus 2.4.1
 
 ![20210603060438](https://user-images.githubusercontent.com/29557494/120552058-b4299e00-c431-11eb-833e-1ac1338b0a70.gif)
-
-<https://docusaurus.io/>
-
-`initialDocURLs`: <https://docusaurus.io/docs>
-
-`demoPDF`: <https://github.com/kohheepeace/mr-pdf/blob/master/v2-docusaurus.pdf>
-
-`command`:
-
-```shell
-npx mr-pdf --initialDocURLs="https://docusaurus.io/docs/" --contentSelector="article" --paginationSelector=".pagination-nav__item--next > a" --excludeSelectors=".margin-vert--xl a" --coverImage="https://docusaurus.io/img/docusaurus.png" --coverTitle="Docusaurus v2"
-```
-
-### Docusaurus 2.4.1
 
 <https://docusaurus.io/>
 
